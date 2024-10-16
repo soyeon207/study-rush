@@ -17,7 +17,7 @@ statistics.configure(bg='#FFFFFF')
 assignment.configure(bg='#FFFFFF')
 login.configure(bg='#FFFFFF')
 
-m.init(login, assignment)
+m.init(login, assignment, 's')
 m.setting()
 
 root.mainloop()
