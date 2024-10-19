@@ -1,18 +1,27 @@
 from tkinter import *
 from tkinter import messagebox
+import assignment as a
+import header as h
 
-login = ''
-assignment = ''
-entry1 = ''
-entry2 = ''
-type = '' # s = student, m = master
+login = None
+assignment = None
+entry1 = None
+entry2 = None
+type = None # s = student, m = master
+header = None
 
-def init(login_frame, assignment_frame, type_):
-    global login, assignment, type
-    login = login_frame
-    assignment = assignment_frame
-    type = type_
+def init(_login, _assignment, _type, _header):
+    global login, assignment, type, header
+    login = _login
+    assignment = _assignment
+    type = _type
+    header = _header
+    setting()
     
+def get_type():
+    global type
+    return type
+
 def mode_change():
     global type, login
     for widget in login.winfo_children():
@@ -45,7 +54,10 @@ def valid_student(student_id, name):
     else:
         print('>>>>> 학생 접속 >>>>>')
         print(f'학번: {student_id}, 이름: {name}')
+        a.set_arg(student_id, name)
         assignment.lift()
+        h.setting(_type = type, _name = student_id+name)
+        header.lift()
 
 def valid_master(code, name):
     global assignment
@@ -58,6 +70,8 @@ def valid_master(code, name):
         print('>>>>> 관리자 접속 >>>>>')
         print(f'코드: {code}, 이름: {name}')
         assignment.lift()
+        h.setting(_type = type, _name = name)
+        header.lift()
 
 def setting():
     global login, entry1, entry2
