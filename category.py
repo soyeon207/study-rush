@@ -1,5 +1,4 @@
 from tkinter import *
-from tkinter import ttk
 from utils import *
 
 class Category:
@@ -9,10 +8,6 @@ class Category:
         self.frame_add_setting()
         self.frame_list_setting()
 
-    def complete_click(self, value):
-        entry_value = self.entries[value-1].get()
-        print(f'Row {value} Entry value: {entry_value}')
-
     def frame_add_setting(self):
         Label(self.assignment, text= '과제 추가', bg=WHITE, font=FONT_18_BOLD, fg=BLACK).place(x=40, y=0)
         self.add = Frame(self.root)
@@ -20,50 +15,34 @@ class Category:
         self.add.configure(bg=LIGHT_GRAY)
 
         Label(self.add, text= '카테고리', bg=LIGHT_GRAY, font=FONT_18, fg=BLACK).place(x=30, y=20)
-        Label(self.add, text= '과제명', bg=LIGHT_GRAY, font=FONT_18, fg=BLACK).place(x=300, y=20)
-        Label(self.add, text= '마감 날짜 (YYYY-MM-DD)', bg=LIGHT_GRAY, font=FONT_18, fg=BLACK).place(x=800, y=20)
-
-        combo = ttk.Combobox(self.add, state="readonly",  values = ["Python", "C", "C++", "Java"], background=LIGHT_GRAY)
-        combo.place(x=30, y=60)
-
-        Entry(self.add, bg=GRAY, width=50, fg=BLACK, bd=0, highlightthickness=0).place(x=300, y=60, height=30)
-        Entry(self.add, bg=GRAY, width=30, fg=BLACK, bd=0, highlightthickness=0).place(x=800, y=60, height=30)
+        Entry(self.add, bg=GRAY, width=115, fg=BLACK, bd=5, relief=FLAT, highlightthickness=0).place(x=30, y=60, height=30)
         Button(self.add, text='추가', font=FONT_16, bd=0, highlightthickness=0).place(x=1100, y=60, height=30)
 
 
     def frame_list_setting(self):
-        Label(self.assignment, text= '과제 리스트', bg=WHITE, font=FONT_18_BOLD, fg=BLACK).place(x=40, y=200)
-        Button(self.assignment, text='파일로 내보내기', font=FONT_16, bd=0, highlightthickness=0).place(x=150, y=200)
-        Button(self.assignment, text='통계보기', font=FONT_16, bd=0, highlightthickness=0).place(x=300, y=200)
+        Label(self.assignment, text= '카테고리 리스트', bg=WHITE, font=FONT_18_BOLD, fg=BLACK).place(x=40, y=200)
+        Button(self.assignment, text='파일로 내보내기', font=FONT_16, bd=0, highlightthickness=0).place(x=180, y=200)
+        Button(self.assignment, text='통계보기', font=FONT_16, bd=0, highlightthickness=0).place(x=330, y=200)
 
         self.list = Frame(self.root)
         self.list.place(x=40, y=380, width=1180, height=370)
         self.list.configure(bg=LIGHT_GRAY)
 
         data = [
-            ["", "카테고리", "과제명", "평균 소요 시간", "걸린 시간", ""],
-            ["오늘", "러닝페어", "러닝페어 계획서 제출 (중요중요)", "20분", "", "완료"],
-            ["D-2", "문제해결과 알고리즘 과제", "과제 2 제출하기", "50분", "", "완료"],
-            ["완료", "문제해결과 알고리즘 과제", "과제 1 제출하기", "5분", "15분", ""]
+            ["카테고리", "완료인원 / 총인원", "평균 소요 시간"],
+            ["문제해결과 알고리즘 과제", "1 / 3", "20 분"],
+            ["러닝페어", "2 / 5", "50 분"],
+            ["문제해결과 알고리즘 퀴즈", "3 / 6", "5 분"]
         ]
 
         self.entries = []
         for i, row in enumerate(data):
             for j, value in enumerate(row):
                 if i == 0:
-                    cell = Label(self.list, text=value, anchor=W, font=FONT_18_BOLD, padx=10, borderwidth=0, relief=SOLID, pady=5, bg=LIGHT_GRAY, fg=BLACK)
-                elif j == 4 and value == '':
-                    cell = Entry(self.list, bg=GRAY, fg=BLACK, font=FONT_18, bd=0, highlightthickness=0, width=8, justify=CENTER)
-                    self.entries.append(cell)
-                elif j == 5 and value == '완료':
-                    print('i : ', i)
-                    cell = Button(self.list,text="완료",font=FONT_16_BOLD, width=3,height=1,bd=0,borderwidth=0,highlightthickness=0, command=lambda row_index=len(self.entries): self.complete_click(row_index))
-                elif j == 0:
-                    cell = Label(self.list, text=value, anchor=W, font=FONT_18_BOLD,  borderwidth=0, relief=SOLID, padx=10, pady=5, bg=GRAY, fg=BLACK)
+                    cell = Label(self.list, anchor=W, text=value, font=FONT_18_BOLD, borderwidth=0, padx=20, pady=5, relief=SOLID, bg=LIGHT_GRAY, fg=BLACK)
                 else:
-                    cell = Label(self.list, text=value, anchor=W, font=FONT_18, borderwidth=0, relief=SOLID, padx=10, pady=5, bg=LIGHT_GRAY, fg=BLACK)
-
-                cell.grid(row=i, column=j, padx=10, pady=10)
+                    cell = Label(self.list, text=value, anchor=W, font=FONT_18, borderwidth=0, bg=LIGHT_GRAY, padx=20, pady=5, fg=BLACK)
+                cell.grid(row=i, column=j, padx=3, pady=10, sticky=W)
 
         # 열 크기 고정
         for j in range(len(data[0])):
