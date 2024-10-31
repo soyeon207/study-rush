@@ -1,0 +1,26 @@
+# Color
+GRAY = '#D9D9D9'
+LIGHT_GRAY = '#F2F2F2'
+BLACK = '#000000'
+WHITE = '#FFFFFF'
+GREEN = '#9DC238'
+
+# Font
+BASIC_FONT = 'TkDefaultFont'
+FONT_20 = (BASIC_FONT, 20)
+FONT_20_BOLD = (BASIC_FONT, 20, 'bold')
+FONT_18_BOLD = (BASIC_FONT, 18, 'bold')
+FONT_18 = (BASIC_FONT, 18)
+FONT_16 = (BASIC_FONT, 16)
+FONT_16_BOLD = (BASIC_FONT, 16, 'bold')
+FONT_20 = (BASIC_FONT, 20)
+FONT_50_BOLD = (BASIC_FONT, 50, 'bold')
+FONT_55_BOLD = (BASIC_FONT, 55, 'bold')
+
+# Type
+MASTER = 'm'
+STUDENT = 's'
+
+# str
+SKKU = 'skku'
+TITLE = 'Study Rush'
