@@ -76,4 +76,6 @@ class Assignment:
 
     def lift(self):
         self.assignment.lift()
+        self.list.lift()
+        self.add.lift()
     

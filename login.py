@@ -62,24 +62,24 @@ class Login:
 
     def setting(self):
         global entry1, entry2
-        Label(self.login, text='Study Rush', bg='#FFFFFF', font=('Helvetica', 55, 'bold'), fg='#000000').place(x=540, y=100)
+        Label(self.login, text='Study Rush', bg='#FFFFFF', font=('Helvetica', 55, 'bold'), fg='#000000').place(x=500, y=100)
         
-        entry1 = Entry(self.login, bg='#FFFFFF', width=45, fg='#000000')
+        entry1 = Entry(self.login, bg='#D9D9D9', font=('Inter', 20), width=30, fg='#000000', bd=7, relief=FLAT, highlightthickness=0)
         entry1.place(x=480, y=250)
 
-        entry2 = Entry(self.login, bg='#FFFFFF', width=45, fg='#000000')
+        entry2 = Entry(self.login, bg='#D9D9D9', relief=FLAT, font=('Inter', 20),  width=30, fg='#000000', bd=7, highlightthickness=0)
         entry2.place(x=480, y=310)
 
-        Button(self.login, text='접속', bg='#FFFFFF', bd=0, font=('나눔고딕', 24), command=self.on_connect, fg='#000000', height=3, width=2).place(x=900, y=250)
+        Button(self.login, text='접속', bg='#FFFFFF', highlightthickness=0, bd=0, font=('Inter', 16), command=self.on_connect, fg='#000000', height=5, width=3).place(x=900, y=250)
         
         if self.type == 's':
-            Label(self.login, text='학번 입력 : ', bg='#FFFFFF', font='나눔고딕', fg='#000000').place(x=400, y=250)
-            Label(self.login, text='이름 입력 : ', bg='#FFFFFF', font='나눔고딕', fg='#000000').place(x=400, y=310)
-            Button(self.login, text='관리자모드 이동     >', bg='black', font=('나눔고딕', 16), bd=0, command=self.mode_change).place(x=550, y=420)
+            Label(self.login, text='학번 : ', bg='#FFFFFF', font=('Inter', 20), fg='#000000').place(x=400, y=250)
+            Label(self.login, text='이름 : ', bg='#FFFFFF', font=('Inter', 20), fg='#000000').place(x=400, y=318)
+            Button(self.login, text='관리자모드 이동    ->', bg='black', font=('Inter', 16), bd=0, highlightthickness=0, command=self.mode_change).place(x=550, y=420)
         else:
-            Label(self.login, text='관리자모드', bg = '#9DC238', font=('나눔고딕', 20, 'bold'), fg='#FFFFFF').place(x=640, y=65)
-            Button(self.login, text='학생 모드 이동     >', bg='black', font=('나눔고딕', 16), bd=0, command=self.mode_change).place(x=550, y=420)
-            Label(self.login, text='코드 입력 : ', bg='#FFFFFF', font='나눔고딕', fg='#000000').place(x=400, y=250)
-            Label(self.login, text='이름 입력 : ', bg='#FFFFFF', font='나눔고딕', fg='#000000').place(x=400, y=310)
+            Label(self.login, text='관리자모드', bg = '#9DC238', font=('Inter', 20, 'bold'), fg='#FFFFFF').place(x=620, y=65)
+            Button(self.login, text='학생 모드 이동    ->', bg='black', font=('Inter', 16), bd=0, highlightthickness=0, command=self.mode_change).place(x=550, y=420)
+            Label(self.login, text='코드 : ', bg='#FFFFFF', font=('Inter', 20), fg='#000000').place(x=400, y=250)
+            Label(self.login, text='이름 : ', bg='#FFFFFF', font=('Inter', 20), fg='#000000').place(x=400, y=318)
 
 
