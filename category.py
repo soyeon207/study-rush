@@ -2,7 +2,7 @@ from tkinter import *
 from tkinter import ttk
 from utils import *
 
-class AssignmentS:
+class Category:
     def __init__(self, root):
         self.root = root
         self.frame_setting()

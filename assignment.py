@@ -1,7 +1,7 @@
 from tkinter import *
 from utils import *
 
-class AssignmentM:
+class Assignment:
     def __init__(self, root):
         self.root = root
         self.frame_setting()
