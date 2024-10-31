@@ -63,7 +63,7 @@ class Login:
 
     def setting(self):
         global entry1, entry2
-        Label(self.login, text='Study Rush', bg=WHITE, font=FONT_55_BOLD, fg=BLACK).place(x=500, y=100)
+        Label(self.login, text=TITLE, bg=WHITE, font=FONT_55_BOLD, fg=BLACK).place(x=500, y=100)
         
         entry1 = Entry(self.login, bg=GRAY, font=FONT_20, width=30, fg=BLACK, bd=7, relief=FLAT, highlightthickness=0)
         entry1.place(x=480, y=250)
