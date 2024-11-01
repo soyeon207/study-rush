@@ -1,6 +1,7 @@
 # Color
 GRAY = '#D9D9D9'
 LIGHT_GRAY = '#F2F2F2'
+DARK_GRAY= '#8A8A8A'
 BLACK = '#000000'
 WHITE = '#FFFFFF'
 GREEN = '#9DC238'
@@ -22,5 +23,5 @@ MASTER = 'm'
 STUDENT = 's'
 
 # str
-SKKU = 'skku'
+SKKU = 'SKKU'
 TITLE = 'Study Rush'

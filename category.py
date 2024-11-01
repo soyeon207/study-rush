@@ -44,7 +44,6 @@ class Category:
                     cell = Label(self.list, text=value, anchor=W, font=FONT_18, borderwidth=0, bg=LIGHT_GRAY, padx=20, pady=5, fg=BLACK)
                 cell.grid(row=i, column=j, padx=3, pady=10, sticky=W)
 
-        # 열 크기 고정
         for j in range(len(data[0])):
             self.list.grid_columnconfigure(j, weight=1)
 

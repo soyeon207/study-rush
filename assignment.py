@@ -23,11 +23,13 @@ class Assignment:
         Label(self.add, text= '과제명', bg=LIGHT_GRAY, font=FONT_18, fg=BLACK).place(x=300, y=20)
         Label(self.add, text= '마감 날짜 (YYYY-MM-DD)', bg=LIGHT_GRAY, font=FONT_18, fg=BLACK).place(x=800, y=20)
 
-        combo = ttk.Combobox(self.add, state="readonly",  values = ["Python", "C", "C++", "Java"], background=LIGHT_GRAY)
+        self.combostyle()
+        combo_values = ["러닝페어", "문제해결과 알고리즘 과제", "문제해결과 알고리즘 퀴즈"]
+        combo = ttk.Combobox(self.add,  values=combo_values, background=LIGHT_GRAY)
         combo.place(x=30, y=60)
 
-        Entry(self.add, bg=GRAY, width=50, fg=BLACK, bd=0, highlightthickness=0).place(x=300, y=60, height=30)
-        Entry(self.add, bg=GRAY, width=30, fg=BLACK, bd=0, highlightthickness=0).place(x=800, y=60, height=30)
+        Entry(self.add, bg=GRAY, width=50, fg=BLACK, bd=5, relief=FLAT, highlightthickness=0).place(x=300, y=60, height=30)
+        Entry(self.add, bg=GRAY, width=30, fg=BLACK, bd=5, relief=FLAT, highlightthickness=0).place(x=800, y=60, height=30)
         Button(self.add, text='추가', font=FONT_16, bd=0, highlightthickness=0).place(x=1100, y=60, height=30)
 
 
@@ -53,22 +55,22 @@ class Assignment:
                 if i == 0:
                     cell = Label(self.list, text=value, anchor=W, font=FONT_18_BOLD, padx=10, borderwidth=0, relief=SOLID, pady=5, bg=LIGHT_GRAY, fg=BLACK)
                 elif j == 4 and value == '':
-                    cell = Entry(self.list, bg=GRAY, fg=BLACK, font=FONT_18, bd=0, highlightthickness=0, width=8, justify=CENTER)
+                    cell = Entry(self.list, bg=GRAY, fg=BLACK, font=FONT_16, relief=FLAT, bd=5, highlightthickness=0, width=8, justify=LEFT)
                     self.entries.append(cell)
                 elif j == 5 and value == '완료':
-                    print('i : ', i)
                     cell = Button(self.list,text="완료",font=FONT_16_BOLD, width=3,height=1,bd=0,borderwidth=0,highlightthickness=0, command=lambda row_index=len(self.entries): self.complete_click(row_index))
                 elif j == 0:
                     cell = Label(self.list, text=value, anchor=W, font=FONT_18_BOLD,  borderwidth=0, relief=SOLID, padx=10, pady=5, bg=GRAY, fg=BLACK)
                 else:
                     cell = Label(self.list, text=value, anchor=W, font=FONT_18, borderwidth=0, relief=SOLID, padx=10, pady=5, bg=LIGHT_GRAY, fg=BLACK)
 
-                cell.grid(row=i, column=j, padx=10, pady=10)
+                if j != 0:
+                    cell.grid(row=i, column=j, padx=10, pady=10, sticky=W)
+                else:
+                    cell.grid(row=i, column=j, padx=10, pady=10)
 
-        # 열 크기 고정
         for j in range(len(data[0])):
             self.list.grid_columnconfigure(j, weight=1)
-
 
     def frame_setting(self):
         self.assignment = Frame(self.root)
@@ -80,3 +82,21 @@ class Assignment:
         self.list.lift()
         self.add.lift()
     
+    def combostyle(self):
+        combostyle = ttk.Style()
+        combostyle.theme_create('combostyle', parent='alt',
+                         settings = {'TCombobox':
+                                     {'configure':
+                                      {'selectbackground': GRAY,
+                                       'fieldbackground': GRAY,
+                                       'background': GRAY,
+                                       'arrowcolor': '#8A8A8A',
+                                       'relief': 'flat',
+                                       'borderwidth': 0,
+                                       'selectforeground': BLACK,
+                                       'foreground': BLACK,
+                                       'padding': 5, 
+                                       'arrowsize': 20
+                                       }}}
+                         )
+        combostyle.theme_use('combostyle') 

@@ -52,9 +52,11 @@ class Login:
             self.header.lift()
 
     def valid_master(self, code, name):
+        print(code, SKKU)
+
         if code == '' or name == '':
             messagebox.showwarning("알럿", "코드와 이름을 입력해주세요.")
-        elif code != SKKU :
+        elif code.upper() != SKKU :
             messagebox.showwarning("알럿", "코드가 일치하지 않습니다.")
         else:
             self.assignment.lift()
