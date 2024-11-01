@@ -1,6 +1,7 @@
 from tkinter import *
 from tkinter import ttk
 from utils import *
+from data import DataAssignment
 
 class Assignment:
     def __init__(self, root):
@@ -42,12 +43,7 @@ class Assignment:
         self.list.place(x=40, y=380, width=1180, height=370)
         self.list.configure(bg=LIGHT_GRAY)
 
-        data = [
-            ["", "카테고리", "과제명", "평균 소요 시간", "걸린 시간", ""],
-            ["오늘", "러닝페어", "러닝페어 계획서 제출 (중요중요)", "20분", "", "완료"],
-            ["D-2", "문제해결과 알고리즘 과제", "과제 2 제출하기", "50분", "", "완료"],
-            ["완료", "문제해결과 알고리즘 과제", "과제 1 제출하기", "5분", "15분", ""]
-        ]
+        data = DataAssignment().format_data()
 
         self.entries = []
         for i, row in enumerate(data):
@@ -90,9 +86,9 @@ class Assignment:
                                       {'selectbackground': GRAY,
                                        'fieldbackground': GRAY,
                                        'background': GRAY,
-                                       'arrowcolor': '#8A8A8A',
+                                       'arrowcolor': DARK_GRAY,
                                        'relief': 'flat',
-                                       'borderwidth': 0,
+                                       'borderwidth': 10,
                                        'selectforeground': BLACK,
                                        'foreground': BLACK,
                                        'padding': 5, 

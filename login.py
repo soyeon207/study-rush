@@ -3,14 +3,12 @@ from tkinter import messagebox
 from utils import *
 
 class Login:
-    entry1 = None
-    entry2 = None
-
-    def __init__(self, root, _assignment, _header):
+    def __init__(self, root, assignment, category, header):
         self.frame_setting(root)
-        self.assignment = _assignment
+        self.assignment = assignment
         self.type = STUDENT
-        self.header = _header
+        self.category = category
+        self.header = header
         self.setting()
 
     def frame_setting(self, root):
@@ -33,9 +31,8 @@ class Login:
 
 
     def on_connect(self):
-        global entry1, entry2
-        entry1_val = entry1.get()
-        entry2_val = entry2.get()
+        entry1_val = self.entry1.get()
+        entry2_val = self.entry2.get()
 
         if self.type == STUDENT:
             self.valid_student(entry1_val, entry2_val)
@@ -59,19 +56,18 @@ class Login:
         elif code.upper() != SKKU :
             messagebox.showwarning("알럿", "코드가 일치하지 않습니다.")
         else:
-            self.assignment.lift()
+            self.category.lift()
             self.header.setting(self.type, name)
             self.header.lift()
 
     def setting(self):
-        global entry1, entry2
         Label(self.login, text=TITLE, bg=WHITE, font=FONT_55_BOLD, fg=BLACK).place(x=500, y=100)
         
-        entry1 = Entry(self.login, bg=GRAY, font=FONT_20, width=30, fg=BLACK, bd=7, relief=FLAT, highlightthickness=0)
-        entry1.place(x=480, y=250)
+        self.entry1 = Entry(self.login, bg=GRAY, font=FONT_20, width=30, fg=BLACK, bd=7, relief=FLAT, highlightthickness=0)
+        self.entry1.place(x=480, y=250)
 
-        entry2 = Entry(self.login, bg=GRAY, relief=FLAT, font=FONT_20,  width=30, fg=BLACK, bd=7, highlightthickness=0)
-        entry2.place(x=480, y=310)
+        self.entry2 = Entry(self.login, bg=GRAY, relief=FLAT, font=FONT_20,  width=30, fg=BLACK, bd=7, highlightthickness=0)
+        self.entry2.place(x=480, y=310)
 
         Button(self.login, text='접속', bg=WHITE, highlightthickness=0, bd=0, font=FONT_16, command=self.on_connect, fg=BLACK, height=5, width=3).place(x=900, y=250)
         

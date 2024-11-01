@@ -1,5 +1,6 @@
 from tkinter import *
 from utils import *
+from data import DataCategory
 
 class Category:
     def __init__(self, root):
@@ -8,6 +9,9 @@ class Category:
         self.frame_add_setting()
         self.frame_list_setting()
 
+    def add_button(self):
+        category_val = self.entry_category.get()
+
     def frame_add_setting(self):
         Label(self.assignment, text= '과제 추가', bg=WHITE, font=FONT_18_BOLD, fg=BLACK).place(x=40, y=0)
         self.add = Frame(self.root)
@@ -15,9 +19,9 @@ class Category:
         self.add.configure(bg=LIGHT_GRAY)
 
         Label(self.add, text= '카테고리', bg=LIGHT_GRAY, font=FONT_18, fg=BLACK).place(x=30, y=20)
-        Entry(self.add, bg=GRAY, width=115, fg=BLACK, bd=5, relief=FLAT, highlightthickness=0).place(x=30, y=60, height=30)
-        Button(self.add, text='추가', font=FONT_16, bd=0, highlightthickness=0).place(x=1100, y=60, height=30)
-
+        self.entry_category = Entry(self.add, bg=GRAY, width=115, fg=BLACK, bd=5, relief=FLAT, highlightthickness=0)
+        self.entry_category.place(x=30, y=60, height=30)
+        Button(self.add, text='추가', font=FONT_16, bd=0, highlightthickness=0, command=self.add_button).place(x=1100, y=60, height=30)
 
     def frame_list_setting(self):
         Label(self.assignment, text= '카테고리 리스트', bg=WHITE, font=FONT_18_BOLD, fg=BLACK).place(x=40, y=200)
@@ -28,13 +32,7 @@ class Category:
         self.list.place(x=40, y=380, width=1180, height=370)
         self.list.configure(bg=LIGHT_GRAY)
 
-        data = [
-            ["카테고리", "완료인원 / 총인원", "평균 소요 시간"],
-            ["문제해결과 알고리즘 과제", "1 / 3", "20 분"],
-            ["러닝페어", "2 / 5", "50 분"],
-            ["문제해결과 알고리즘 퀴즈", "3 / 6", "5 분"]
-        ]
-
+        data = DataCategory().format_data()
         self.entries = []
         for i, row in enumerate(data):
             for j, value in enumerate(row):
