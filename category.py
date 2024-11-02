@@ -5,12 +5,15 @@ from data import DataCategory
 class Category:
     def __init__(self, root):
         self.root = root
+        self.data = DataCategory()
         self.frame_setting()
         self.frame_add_setting()
         self.frame_list_setting()
-
+        
     def add_button(self):
-        category_val = self.entry_category.get()
+        category = self.entry_category.get()
+        self.data.add_category(category)
+        self.list_synk()
 
     def frame_add_setting(self):
         Label(self.assignment, text= '과제 추가', bg=WHITE, font=FONT_18_BOLD, fg=BLACK).place(x=40, y=0)
@@ -32,7 +35,13 @@ class Category:
         self.list.place(x=40, y=380, width=1180, height=370)
         self.list.configure(bg=LIGHT_GRAY)
 
-        data = DataCategory().format_data()
+        self.list_synk()
+    
+    def list_synk(self):
+        for widget in self.list.winfo_children():
+            widget.destroy()
+
+        data = self.data.format_data()
         self.entries = []
         for i, row in enumerate(data):
             for j, value in enumerate(row):
@@ -44,6 +53,7 @@ class Category:
 
         for j in range(len(data[0])):
             self.list.grid_columnconfigure(j, weight=1)
+
 
 
     def frame_setting(self):

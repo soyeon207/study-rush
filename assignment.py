@@ -1,11 +1,13 @@
 from tkinter import *
 from tkinter import ttk
 from utils import *
-from data import DataAssignment
+from data import DataAssignment, DataCategory
 
 class Assignment:
     def __init__(self, root):
         self.root = root
+        self.data_assignment = DataAssignment()
+        self.data_category = DataCategory()
         self.frame_setting()
         self.frame_add_setting()
         self.frame_list_setting()
@@ -25,14 +27,22 @@ class Assignment:
         Label(self.add, text= '마감 날짜 (YYYY-MM-DD)', bg=LIGHT_GRAY, font=FONT_18, fg=BLACK).place(x=800, y=20)
 
         self.combostyle()
-        combo_values = ["러닝페어", "문제해결과 알고리즘 과제", "문제해결과 알고리즘 퀴즈"]
-        combo = ttk.Combobox(self.add,  values=combo_values, background=LIGHT_GRAY)
-        combo.place(x=30, y=60)
+        combo_values = self.data_category.category_list()
+        self.combo = ttk.Combobox(self.add,  values=combo_values, background=LIGHT_GRAY)
+        self.combo.place(x=30, y=60)
 
         Entry(self.add, bg=GRAY, width=50, fg=BLACK, bd=5, relief=FLAT, highlightthickness=0).place(x=300, y=60, height=30)
         Entry(self.add, bg=GRAY, width=30, fg=BLACK, bd=5, relief=FLAT, highlightthickness=0).place(x=800, y=60, height=30)
         Button(self.add, text='추가', font=FONT_16, bd=0, highlightthickness=0).place(x=1100, y=60, height=30)
 
+    def combo_sync(self):
+        if self.combo != None:
+            self.combo.destroy()
+            combo_values = self.data_category.category_list()
+            self.combo = ttk.Combobox(self.add,  values=combo_values, background=LIGHT_GRAY)
+            self.combo.place(x=30, y=60)
+
+        
 
     def frame_list_setting(self):
         Label(self.assignment, text= '과제 리스트', bg=WHITE, font=FONT_18_BOLD, fg=BLACK).place(x=40, y=200)
@@ -43,7 +53,7 @@ class Assignment:
         self.list.place(x=40, y=380, width=1180, height=370)
         self.list.configure(bg=LIGHT_GRAY)
 
-        data = DataAssignment().format_data()
+        data = self.data_assignment.format_data()
 
         self.entries = []
         for i, row in enumerate(data):
@@ -77,6 +87,7 @@ class Assignment:
         self.assignment.lift()
         self.list.lift()
         self.add.lift()
+        self.combo_sync()
     
     def combostyle(self):
         combostyle = ttk.Style()

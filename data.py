@@ -1,4 +1,5 @@
 from datetime import datetime
+from tkinter import messagebox
 
 class DataCategory:
     data = {
@@ -26,17 +27,33 @@ class DataCategory:
     def format_data(self):
         result = [["카테고리", "완료인원 / 총인원", "평균 소요 시간"]]
         for key, value in self.data.items():
-            result.append([key, str.format('{0} / {1}', value['완료인원'], value['총인원']), str.format('{0} 분', (value['총 소요 시간'] // value['완료인원']))])
+            avg = 0
+            if value['완료인원'] > 0:
+                avg = (value['총 소요 시간'] // value['완료인원'])
+
+            result.append([key, str.format('{0} / {1}', value['완료인원'], value['총인원']), str.format('{0} 분', avg)])
         return result
     
     def category_list(self):
-        return self.data.keys()
+        return list(self.data.keys())
     
     def statistic_pie_data(self, category):
         return [self.data[category]['완료인원'], self.data[category]['총인원']- self.data[category]['완료인원']]
     
     def statistic_bar_data(self, category):
         return self.data[category]['소요 시간']
+    
+    def add_category(self, category):
+        if category in self.data:
+            messagebox.showwarning("알럿", "이미 있는 카테고리 입니다.")
+            return
+
+        self.data[category] = {
+            '완료인원': 0,
+            '총인원': 0,
+            '총 소요 시간': 0,
+            '소요 시간': []
+        }
     
 
 class DataAssignment:
