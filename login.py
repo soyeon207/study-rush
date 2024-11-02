@@ -11,6 +11,9 @@ class Login:
         self.header = header
         self.setting()
 
+    def lift(self):
+        self.login.lift()
+
     def frame_setting(self, root):
         self.login = Frame(root)
         self.login.place(x=0, y=0, width=1280, height=832)

@@ -14,6 +14,8 @@ header = Header(root)
 assignment = Assignment(root)
 category = Category(root)
 statisitc = Statistic(root)
-login = Login(root, assignment, header)
+login = Login(root, assignment, category, header)
+
+header.set_login(login)
 
 root.mainloop()
