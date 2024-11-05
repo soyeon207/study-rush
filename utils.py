@@ -25,3 +25,6 @@ STUDENT = 's'
 # str
 SKKU = 'SKKU'
 TITLE = 'Study Rush'
+
+# date
+DATE_FORMAT = '%Y-%m-%d'

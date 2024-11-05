@@ -1,5 +1,6 @@
 from datetime import datetime
 from tkinter import messagebox
+from utils import *
 
 class DataCategory:
     data = {
@@ -88,8 +89,7 @@ class DataAssignment:
 
     def difference_date(self, target):
         now = datetime.now()
-        f = '%Y-%m-%d'
-        converted_date = datetime.strptime(target, f)
+        converted_date = datetime.strptime(target, DATE_FORMAT)
         date_difference = now - converted_date 
 
         day = date_difference.days

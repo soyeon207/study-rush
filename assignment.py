@@ -5,8 +5,6 @@ from data import DataAssignment, DataCategory
 from datetime import datetime
 
 class Assignment:
-    DATE_FORMAT = "%Y-%m-%d"
-
     def __init__(self, root, factory):
         self.root = root
         self.factory = factory
@@ -18,7 +16,7 @@ class Assignment:
 
     def is_valid_date(self, date_str):
         try:
-            date = datetime.strptime(date_str, self.DATE_FORMAT)
+            date = datetime.strptime(date_str, DATE_FORMAT)
             return date 
         except ValueError:
             return False
@@ -30,19 +28,33 @@ class Assignment:
     def btn_add(self):
         data_name = self.entry_category.get()
         data_date = self.entry_assignment.get()
-        data_combo = self.combo.get()
+        data_category = self.combo.get()
+        
+        if self.btn_add_valid(data_name, data_date, data_category):
+            self.data_assignment.add_assignment(self.factory.get_student_number(), data_date, data_category, data_name)
+            self.list_sync()
+            self.clear_entry()
 
-        if data_name == '':
+    def clear_entry(self):
+        self.entry_assignment.delete(0, END)
+        self.entry_category.delete(0, END)
+        self.combo.set('')
+
+    def btn_add_valid(self, name, date, category):
+        valid_date = self.is_valid_date(date)
+        if name == '':
             messagebox.showwarning("알럿", "과제명을 입력해주세요.")
-        elif data_date == '':
+        elif date == '':
             messagebox.showwarning("알럿", "마감 날짜를 입력해주세요.")
-        elif self.is_valid_date(data_date) == False:
+        elif valid_date == False:
             messagebox.showwarning("알럿", "마감 날짜 형식(년-월-일) 을 맞춰서 입력해주세요.")
-        elif data_combo == '':
+        elif valid_date < datetime.now():
+            messagebox.showwarning("알럿", "오늘보다 큰 날짜를 입력해주세요.")
+        elif category == '':
             messagebox.showwarning("알럿", "카테고리를 선택해주세요.")
         else:
-            self.data_assignment.add_assignment(self.factory.get_student_number(), data_date, data_combo, data_name)
-            self.list_sync()
+            return True
+        return False
 
     def frame_add_setting(self):
         Label(self.assignment, text= '과제 추가', bg=WHITE, font=FONT_18_BOLD, fg=BLACK).place(x=40, y=0)
@@ -71,8 +83,6 @@ class Assignment:
             combo_values = self.data_category.category_list()
             self.combo = ttk.Combobox(self.add,  values=combo_values, background=LIGHT_GRAY)
             self.combo.place(x=30, y=60)
-
-        
 
     def frame_list_setting(self):
         Label(self.assignment, text= '과제 리스트', bg=WHITE, font=FONT_18_BOLD, fg=BLACK).place(x=40, y=200)
