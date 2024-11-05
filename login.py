@@ -1,14 +1,16 @@
 from tkinter import *
 from tkinter import messagebox
 from utils import *
+from member import Member
 
 class Login:
-    def __init__(self, root, assignment, category, header):
+    def __init__(self, root, assignment, category, header, factory):
         self.frame_setting(root)
         self.assignment = assignment
         self.type = STUDENT
         self.category = category
         self.header = header
+        self.factory = factory
         self.setting()
 
     def lift(self):
@@ -34,33 +36,35 @@ class Login:
 
 
     def on_connect(self):
-        entry1_val = self.entry1.get()
-        entry2_val = self.entry2.get()
+        entry_val1 = self.entry1.get()
+        entry_val2 = self.entry2.get()
+
+        self.member = Member(self.type, entry_val1, entry_val2)
 
         if self.type == STUDENT:
-            self.valid_student(entry1_val, entry2_val)
+            self.valid_student()
         else:
-            self.valid_master(entry1_val, entry2_val)
+            self.valid_master(entry_val1, entry_val2)
 
 
-    def valid_student(self, student_id, name):
-        if student_id == '' or name == '':
+    def valid_student(self):
+        if self.member.valid_check() == False:
             messagebox.showwarning("알럿", "학번과 이름을 입력해주세요.")
         else:
+            self.factory.set_member(self.member)
             self.assignment.lift()
-            self.header.setting(self.type, student_id+' ' + name)
+            self.header.setting()
             self.header.lift()
 
     def valid_master(self, code, name):
-        print(code, SKKU)
-
-        if code == '' or name == '':
+        if code == '' or self.member.valid_check() == False:
             messagebox.showwarning("알럿", "코드와 이름을 입력해주세요.")
         elif code.upper() != SKKU :
             messagebox.showwarning("알럿", "코드가 일치하지 않습니다.")
         else:
+            self.factory.set_member(self.member)
             self.category.lift()
-            self.header.setting(self.type, name)
+            self.header.setting()
             self.header.lift()
 
     def setting(self):

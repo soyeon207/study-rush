@@ -5,22 +5,22 @@ class DataCategory:
     data = {
         '문제해결과 알고리즘 과제': {
             '완료인원': 1,
-            '총인원': 3,
-            '총 소요 시간': 60,
-            '소요 시간': [60]
+            '총인원': 2,
+            '총 소요 시간': 15,
+            '소요 시간': [15]
         },
         '러닝페어': {
-            '완료인원': 2,
-            '총인원': 5,
-            '총 소요 시간': 100,
-            '소요 시간': [40, 60]
+            '완료인원': 0,
+            '총인원': 1,
+            '총 소요 시간': 0,
+            '소요 시간': []
         }
         ,
         '문제해결과 알고리즘 퀴즈': {
-            '완료인원': 3,
-            '총인원': 6,
-            '총 소요 시간': 15,
-            '소요 시간': [1, 7, 7]
+            '완료인원': 0,
+            '총인원': 0,
+            '총 소요 시간': 0,
+            '소요 시간': []
         }
     } 
 
@@ -54,6 +54,11 @@ class DataCategory:
             '총 소요 시간': 0,
             '소요 시간': []
         }
+
+    def add_assignment(self, category):
+        print(self.data)
+        self.data[category]['총인원'] = self.data[category]['총인원'] + 1
+        print(self.data)
     
 
 class DataAssignment:
@@ -100,15 +105,36 @@ class DataAssignment:
         result = [["", "카테고리", "과제명", "평균 소요 시간", "걸린 시간", ""]]
         category_data = DataCategory.data
         for d in self.data['2024311126']:
+
+            avg_time = '0분'
+            if category_data[d['카테고리']]['완료인원'] > 0:
+                avg_time = str(category_data[d['카테고리']]['총 소요 시간'] // category_data[d['카테고리']]['완료인원']) + '분'
+
             result.append([
                 self.difference_date(d['마감 날짜']),
                 d['카테고리'],
                 d['과제명'],
-                str(category_data[d['카테고리']]['총 소요 시간'] // category_data[d['카테고리']]['완료인원']) + '분', 
+                avg_time,
                 d['걸린 시간'],
                 d['버튼']
             ])
 
         return result
+    
+    def add_assignment(self, number, date, category, name):
+        temp = {
+            '마감 날짜': date,
+            '카테고리': category,
+            '과제명': name,
+            '걸린 시간': '',
+            '버튼': '완료'
+        }
 
-print(list(DataCategory().category_list()))
+        if number not in self.data:
+            self.data[number] = []
+
+        self.data[number].append(temp)
+        DataCategory().add_assignment(category)
+            
+            
+

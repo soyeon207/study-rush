@@ -1,20 +1,48 @@
 from tkinter import *
-from tkinter import ttk
+from tkinter import ttk, messagebox
 from utils import *
 from data import DataAssignment, DataCategory
+from datetime import datetime
 
 class Assignment:
-    def __init__(self, root):
+    DATE_FORMAT = "%Y-%m-%d"
+
+    def __init__(self, root, factory):
         self.root = root
+        self.factory = factory
         self.data_assignment = DataAssignment()
         self.data_category = DataCategory()
         self.frame_setting()
         self.frame_add_setting()
         self.frame_list_setting()
 
+    def is_valid_date(self, date_str):
+        try:
+            date = datetime.strptime(date_str, self.DATE_FORMAT)
+            return date 
+        except ValueError:
+            return False
+
     def complete_click(self, value):
         entry_value = self.entries[value-1].get()
         print(f'Row {value} Entry value: {entry_value}')
+
+    def btn_add(self):
+        data_name = self.entry_category.get()
+        data_date = self.entry_assignment.get()
+        data_combo = self.combo.get()
+
+        if data_name == '':
+            messagebox.showwarning("알럿", "과제명을 입력해주세요.")
+        elif data_date == '':
+            messagebox.showwarning("알럿", "마감 날짜를 입력해주세요.")
+        elif self.is_valid_date(data_date) == False:
+            messagebox.showwarning("알럿", "마감 날짜 형식(년-월-일) 을 맞춰서 입력해주세요.")
+        elif data_combo == '':
+            messagebox.showwarning("알럿", "카테고리를 선택해주세요.")
+        else:
+            self.data_assignment.add_assignment(self.factory.get_student_number(), data_date, data_combo, data_name)
+            self.list_sync()
 
     def frame_add_setting(self):
         Label(self.assignment, text= '과제 추가', bg=WHITE, font=FONT_18_BOLD, fg=BLACK).place(x=40, y=0)
@@ -31,9 +59,11 @@ class Assignment:
         self.combo = ttk.Combobox(self.add,  values=combo_values, background=LIGHT_GRAY)
         self.combo.place(x=30, y=60)
 
-        Entry(self.add, bg=GRAY, width=50, fg=BLACK, bd=5, relief=FLAT, highlightthickness=0).place(x=300, y=60, height=30)
-        Entry(self.add, bg=GRAY, width=30, fg=BLACK, bd=5, relief=FLAT, highlightthickness=0).place(x=800, y=60, height=30)
-        Button(self.add, text='추가', font=FONT_16, bd=0, highlightthickness=0).place(x=1100, y=60, height=30)
+        self.entry_category = Entry(self.add, bg=GRAY, width=50, fg=BLACK, bd=5, relief=FLAT, highlightthickness=0)
+        self.entry_category.place(x=300, y=60, height=30)
+        self.entry_assignment = Entry(self.add, bg=GRAY, width=30, fg=BLACK, bd=5, relief=FLAT, highlightthickness=0)
+        self.entry_assignment.place(x=800, y=60, height=30)
+        Button(self.add, text='추가', font=FONT_16, bd=0, highlightthickness=0, command=self.btn_add).place(x=1100, y=60, height=30)
 
     def combo_sync(self):
         if self.combo != None:
@@ -52,9 +82,13 @@ class Assignment:
         self.list = Frame(self.root)
         self.list.place(x=40, y=380, width=1180, height=370)
         self.list.configure(bg=LIGHT_GRAY)
+        self.list_sync()
 
+    def list_sync(self):
+        for widget in self.list.winfo_children():
+            widget.destroy()
+        
         data = self.data_assignment.format_data()
-
         self.entries = []
         for i, row in enumerate(data):
             for j, value in enumerate(row):
