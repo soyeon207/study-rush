@@ -11,8 +11,9 @@ class Statistic:
     LABEL_FONT_SIZE = 8
     TITLE_FONT_SIZE = 13
 
-    def __init__(self, root):
+    def __init__(self, root, class_factory):
         self.root = root
+        self.class_factory = class_factory
         plt.rcParams['font.family'] = 'AppleGothic'
         self.setting()
 
@@ -20,6 +21,9 @@ class Statistic:
         selected_value = self.combo.get()
         self.pie(selected_value)
         self.bar(selected_value)
+
+    def btn_back(self):
+        self.class_factory.assignment.lift()
 
     def setting(self):        
         self.statistic = Frame(self.root)
@@ -34,8 +38,14 @@ class Statistic:
         self.combo.place(x=40, y=40)
         self.combo.bind("<<ComboboxSelected>>", self.on_combobox_selected)
 
+        Button(self.statistic, text='뒤로 가기', font=FONT_16, bd=0, highlightthickness=0, command=self.btn_back).place(x=1150, y=0)
+
     def pie(self, category):
         ratio = self.data_category.statistic_pie_data(category)
+        if ratio[0] == 0 and ratio[1] == 0:
+            messagebox.showwarning('알럿', '데이터가 없습니다.')
+            return
+
         labels = ['완료 수', '미완료 수']
         
         fig, ax = plt.subplots()
@@ -72,3 +82,6 @@ class Statistic:
         canvas.draw()
         canvas_widget = canvas.get_tk_widget()
         canvas_widget.place(x=x, y=y)
+
+    def lift(self):
+        self.statistic.lift()

@@ -5,12 +5,13 @@ from data import DataAssignment, DataCategory
 from datetime import datetime
 
 class Assignment:
-    def __init__(self, root, factory):
+    def __init__(self, root, factory, class_factory):
         self.root = root
         self.factory = factory
         self.data_assignment = DataAssignment()
         self.data_category = DataCategory()
         self.setting()
+        self.class_factory = class_factory
     
     def setting(self):
         self.setting_frame()
@@ -38,7 +39,7 @@ class Assignment:
         messagebox.showinfo("알럿", "파일 저장 완료 (assignment.txt)")
 
     def btn_statistics(self):
-        pass
+        self.class_factory.statistic.lift()
 
     def btn_add(self):
         data_name = self.entry_category.get()
