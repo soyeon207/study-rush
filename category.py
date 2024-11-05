@@ -1,11 +1,16 @@
 from tkinter import *
+from tkinter import messagebox
 from utils import *
 from data import DataCategory
 
+
 class Category:
-    def __init__(self, root):
+    def __init__(self, root, factory, class_factory):
         self.root = root
         self.data = DataCategory()
+        self.factory = factory
+        self.class_factory = class_factory
+
         self.frame_setting()
         self.frame_add_setting()
         self.frame_list_setting()
@@ -14,6 +19,13 @@ class Category:
         category = self.entry_category.get()
         self.data.add_category(category)
         self.list_synk()
+
+    def btn_statistics(self):
+        self.class_factory.statistic.lift()
+    
+    def btn_file(self):
+        self.data.file()
+        messagebox.showinfo("알럿", "파일 저장 완료 (category.txt)")
 
     def frame_add_setting(self):
         Label(self.assignment, text= '과제 추가', bg=WHITE, font=FONT_18_BOLD, fg=BLACK).place(x=40, y=0)
@@ -28,8 +40,8 @@ class Category:
 
     def frame_list_setting(self):
         Label(self.assignment, text= '카테고리 리스트', bg=WHITE, font=FONT_18_BOLD, fg=BLACK).place(x=40, y=200)
-        Button(self.assignment, text='파일로 내보내기', font=FONT_16, bd=0, highlightthickness=0).place(x=180, y=200)
-        Button(self.assignment, text='통계보기', font=FONT_16, bd=0, highlightthickness=0).place(x=330, y=200)
+        Button(self.assignment, text='파일로 내보내기', font=FONT_16, bd=0, highlightthickness=0, command=self.btn_file).place(x=180, y=200)
+        Button(self.assignment, text='통계보기', font=FONT_16, bd=0, highlightthickness=0, command=self.btn_statistics).place(x=330, y=200)
 
         self.list = Frame(self.root)
         self.list.place(x=40, y=380, width=1180, height=370)
@@ -53,8 +65,6 @@ class Category:
 
         for j in range(len(data[0])):
             self.list.grid_columnconfigure(j, weight=1)
-
-
 
     def frame_setting(self):
         self.assignment = Frame(self.root)

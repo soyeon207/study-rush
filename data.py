@@ -64,6 +64,14 @@ class DataCategory:
 
     def add_assignment(self, category):
         self.data[category]['총인원'] = self.data[category]['총인원'] + 1
+
+    def file(self):
+        with open('category.txt', 'w', encoding='utf-8') as file:
+            for category, details in self.data.items():
+                file.write(f"카테고리: {category}\n")
+                for key, value in details.items():
+                    file.write(f"  {key}: {value}\n")
+                file.write("\n")
     
 
 class DataAssignment:
@@ -111,23 +119,24 @@ class DataAssignment:
             return '마감'
         
 
-    def format_data(self):
+    def format_data(self, student_number):
         result = [["", "카테고리", "과제명", "평균 소요 시간", "걸린 시간", ""]]
         category_data = DataCategory.data
-        for d in self.data['2024311126']:
+        
+        if student_number in self.data:
+            for d in self.data[student_number]:
+                avg_time = '0분'
+                if category_data[d['카테고리']]['완료인원'] > 0:
+                    avg_time = str(category_data[d['카테고리']]['총 소요 시간'] // category_data[d['카테고리']]['완료인원']) + '분'
 
-            avg_time = '0분'
-            if category_data[d['카테고리']]['완료인원'] > 0:
-                avg_time = str(category_data[d['카테고리']]['총 소요 시간'] // category_data[d['카테고리']]['완료인원']) + '분'
-
-            result.append([
-                self.difference_date(d['마감 날짜']),
-                d['카테고리'],
-                d['과제명'],
-                avg_time,
-                d['걸린 시간'],
-                d['버튼']
-            ])
+                result.append([
+                    self.difference_date(d['마감 날짜']),
+                    d['카테고리'],
+                    d['과제명'],
+                    avg_time,
+                    d['걸린 시간'],
+                    d['버튼']
+                ])
 
         return result
     

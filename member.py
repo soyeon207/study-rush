@@ -20,5 +20,11 @@ class Member:
         return True
 
     def displated_name(self):
-        return self.student_number + ' '+ self.name
+        if type == STUDENT:
+            return self.student_number + ' '+ self.name
+        
+        return self.name
+    
+    def is_student(self):
+        return type == STUDENT
             

@@ -18,9 +18,9 @@ factory = DataFactory()
 class_factory = ClassFactory()
 
 header = Header(root, factory)
-category = Category(root)
+category = Category(root, factory, class_factory)
 assignment = Assignment(root, factory, class_factory)
-statisitc = Statistic(root, class_factory)
+statisitc = Statistic(root, factory, class_factory)
 login = Login(root, assignment, category, header, factory)
 
 header.set_login(login)

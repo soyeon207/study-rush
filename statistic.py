@@ -11,8 +11,9 @@ class Statistic:
     LABEL_FONT_SIZE = 8
     TITLE_FONT_SIZE = 13
 
-    def __init__(self, root, class_factory):
+    def __init__(self, root, factory, class_factory):
         self.root = root
+        self.factory = factory
         self.class_factory = class_factory
         plt.rcParams['font.family'] = 'AppleGothic'
         self.setting()
@@ -23,7 +24,10 @@ class Statistic:
         self.bar(selected_value)
 
     def btn_back(self):
-        self.class_factory.assignment.lift()
+        if self.factory.is_student():
+            self.class_factory.assignment.lift()
+        else:
+            self.class_factory.category.lift()
 
     def setting(self):        
         self.statistic = Frame(self.root)
@@ -33,12 +37,18 @@ class Statistic:
         self.data_category = DataCategory()
 
         Label(self.statistic, text= '카테고리별 통계 보기', bg=WHITE, font=FONT_18_BOLD, fg=BLACK).place(x=40, y=0)
+        Button(self.statistic, text='뒤로 가기', font=FONT_16, bd=0, highlightthickness=0, command=self.btn_back).place(x=1150, y=0)
+        self.combo = None
+        self.combo_sync()
+
+    def combo_sync(self):
+        if self.combo != None:
+            self.combo.destroy()
+
         category_list = list(DataCategory().category_list())
         self.combo = ttk.Combobox(self.statistic, height=15, state="readonly",  values = category_list, background=LIGHT_GRAY)
         self.combo.place(x=40, y=40)
         self.combo.bind("<<ComboboxSelected>>", self.on_combobox_selected)
-
-        Button(self.statistic, text='뒤로 가기', font=FONT_16, bd=0, highlightthickness=0, command=self.btn_back).place(x=1150, y=0)
 
     def pie(self, category):
         ratio = self.data_category.statistic_pie_data(category)
@@ -85,3 +95,4 @@ class Statistic:
 
     def lift(self):
         self.statistic.lift()
+        self.combo_sync()

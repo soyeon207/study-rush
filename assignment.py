@@ -82,9 +82,8 @@ class Assignment:
         Label(self.add, text= '과제명', bg=LIGHT_GRAY, font=FONT_18, fg=BLACK).place(x=300, y=20)
         Label(self.add, text= '마감 날짜 (YYYY-MM-DD)', bg=LIGHT_GRAY, font=FONT_18, fg=BLACK).place(x=800, y=20)
 
-        combo_values = self.data_category.category_list()
-        self.combo = ttk.Combobox(self.add,  values=combo_values, background=LIGHT_GRAY)
-        self.combo.place(x=30, y=60)
+        self.combo = None
+        self.combo_sync()
 
         self.entry_category = Entry(self.add, bg=GRAY, width=50, fg=BLACK, bd=5, relief=FLAT, highlightthickness=0)
         self.entry_category.place(x=300, y=60, height=30)
@@ -95,9 +94,10 @@ class Assignment:
     def combo_sync(self):
         if self.combo != None:
             self.combo.destroy()
-            combo_values = self.data_category.category_list()
-            self.combo = ttk.Combobox(self.add,  values=combo_values, background=LIGHT_GRAY)
-            self.combo.place(x=30, y=60)
+
+        combo_values = self.data_category.category_list()
+        self.combo = ttk.Combobox(self.add,  values=combo_values, background=LIGHT_GRAY)
+        self.combo.place(x=30, y=60)
 
     def setting_frame_list(self):
         Label(self.assignment, text= '과제 리스트', bg=WHITE, font=FONT_18_BOLD, fg=BLACK).place(x=40, y=200)
@@ -107,13 +107,12 @@ class Assignment:
         self.list = Frame(self.root)
         self.list.place(x=40, y=380, width=1180, height=370)
         self.list.configure(bg=LIGHT_GRAY)
-        self.list_sync()
 
     def list_sync(self):
         for widget in self.list.winfo_children():
             widget.destroy()
         
-        data = self.data_assignment.format_data()
+        data = self.data_assignment.format_data(self.factory.get_student_number())
         self.entries = []
         for i, row in enumerate(data):
             for j, value in enumerate(row):
@@ -147,8 +146,10 @@ class Assignment:
         self.assignment.configure(bg=WHITE)
 
     def lift(self):
+        self.list_sync()
         self.assignment.lift()
         self.list.lift()
         self.add.lift()
         self.combo_sync()
+        
     
