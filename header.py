@@ -20,8 +20,6 @@ class Header:
 
     def setting(self):
         self.member = self.factory.member
-        print(self.member)
-
         Label(self.header, text=TITLE, bg=WHITE, font=FONT_50_BOLD, fg=BLACK).place(x=20, y=20)
         Label(self.header, text= self.member.displated_name() + ' 님 안녕하세요', bg=WHITE, font='나눔고딕', fg=BLACK).place(x=330, y=50)
         Button(self.header, text='로그아웃', font=FONT_16, bd=0, highlightthickness=0, command=self.logout).place(x=600, y=50)

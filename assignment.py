@@ -10,9 +10,12 @@ class Assignment:
         self.factory = factory
         self.data_assignment = DataAssignment()
         self.data_category = DataCategory()
-        self.frame_setting()
-        self.frame_add_setting()
-        self.frame_list_setting()
+        self.setting()
+    
+    def setting(self):
+        self.setting_frame()
+        self.setting_frame_add()
+        self.setting_frame_list()
 
     def is_valid_date(self, date_str):
         try:
@@ -22,8 +25,13 @@ class Assignment:
             return False
 
     def complete_click(self, value):
-        entry_value = self.entries[value-1].get()
-        print(f'Row {value} Entry value: {entry_value}')
+        entry_value = int(self.entries[value-1].get())
+        if entry_value == 0:
+            messagebox.showwarning("알럿", "걸린 시간을 입력해주세요.")
+            return 
+
+        self.data_assignment.complete(self.factory.get_student_number(), value, entry_value)
+        self.list_sync()
 
     def btn_add(self):
         data_name = self.entry_category.get()
@@ -56,7 +64,7 @@ class Assignment:
             return True
         return False
 
-    def frame_add_setting(self):
+    def setting_frame_add(self):
         Label(self.assignment, text= '과제 추가', bg=WHITE, font=FONT_18_BOLD, fg=BLACK).place(x=40, y=0)
         self.add = Frame(self.root)
         self.add.place(x=40, y=175, width=1180, height=130)
@@ -66,7 +74,6 @@ class Assignment:
         Label(self.add, text= '과제명', bg=LIGHT_GRAY, font=FONT_18, fg=BLACK).place(x=300, y=20)
         Label(self.add, text= '마감 날짜 (YYYY-MM-DD)', bg=LIGHT_GRAY, font=FONT_18, fg=BLACK).place(x=800, y=20)
 
-        self.combostyle()
         combo_values = self.data_category.category_list()
         self.combo = ttk.Combobox(self.add,  values=combo_values, background=LIGHT_GRAY)
         self.combo.place(x=30, y=60)
@@ -84,7 +91,7 @@ class Assignment:
             self.combo = ttk.Combobox(self.add,  values=combo_values, background=LIGHT_GRAY)
             self.combo.place(x=30, y=60)
 
-    def frame_list_setting(self):
+    def setting_frame_list(self):
         Label(self.assignment, text= '과제 리스트', bg=WHITE, font=FONT_18_BOLD, fg=BLACK).place(x=40, y=200)
         Button(self.assignment, text='파일로 내보내기', font=FONT_16, bd=0, highlightthickness=0).place(x=150, y=200)
         Button(self.assignment, text='통계보기', font=FONT_16, bd=0, highlightthickness=0).place(x=300, y=200)
@@ -114,6 +121,9 @@ class Assignment:
                 else:
                     cell = Label(self.list, text=value, anchor=W, font=FONT_18, borderwidth=0, relief=SOLID, padx=10, pady=5, bg=LIGHT_GRAY, fg=BLACK)
 
+                if i != 0 and j == 4 and value != '':
+                    self.entries.append('')
+
                 if j != 0:
                     cell.grid(row=i, column=j, padx=10, pady=10, sticky=W)
                 else:
@@ -122,7 +132,7 @@ class Assignment:
         for j in range(len(data[0])):
             self.list.grid_columnconfigure(j, weight=1)
 
-    def frame_setting(self):
+    def setting_frame(self):
         self.assignment = Frame(self.root)
         self.assignment.place(x=0, y=140, width=1280, height=692)
         self.assignment.configure(bg=WHITE)
@@ -133,21 +143,3 @@ class Assignment:
         self.add.lift()
         self.combo_sync()
     
-    def combostyle(self):
-        combostyle = ttk.Style()
-        combostyle.theme_create('combostyle', parent='alt',
-                         settings = {'TCombobox':
-                                     {'configure':
-                                      {'selectbackground': GRAY,
-                                       'fieldbackground': GRAY,
-                                       'background': GRAY,
-                                       'arrowcolor': DARK_GRAY,
-                                       'relief': 'flat',
-                                       'borderwidth': 10,
-                                       'selectforeground': BLACK,
-                                       'foreground': BLACK,
-                                       'padding': 5, 
-                                       'arrowsize': 20
-                                       }}}
-                         )
-        combostyle.theme_use('combostyle') 

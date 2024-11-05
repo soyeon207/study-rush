@@ -25,6 +25,12 @@ class DataCategory:
         }
     } 
 
+    def complete(self, category, time):
+        data_category = self.data[category]
+        data_category['완료인원'] += 1
+        data_category['총 소요 시간'] += time
+        data_category['소요 시간'].append(time)
+
     def format_data(self):
         result = [["카테고리", "완료인원 / 총인원", "평균 소요 시간"]]
         for key, value in self.data.items():
@@ -57,9 +63,7 @@ class DataCategory:
         }
 
     def add_assignment(self, category):
-        print(self.data)
         self.data[category]['총인원'] = self.data[category]['총인원'] + 1
-        print(self.data)
     
 
 class DataAssignment:
@@ -86,6 +90,12 @@ class DataAssignment:
             '버튼': ''
         }]
     }
+
+    def complete(self, student_number, idx, time):
+        assignment = self.data[student_number][idx-1]
+        assignment['걸린 시간'] = str(time) + '분'
+        assignment['버튼'] = ''
+        DataCategory().complete(assignment['카테고리'], time)
 
     def difference_date(self, target):
         now = datetime.now()
