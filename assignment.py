@@ -24,7 +24,7 @@ class Assignment:
         except ValueError:
             return False
 
-    def complete_click(self, value):
+    def btn_complete(self, value):
         entry_value = int(self.entries[value-1].get())
         if entry_value == 0:
             messagebox.showwarning("알럿", "걸린 시간을 입력해주세요.")
@@ -32,6 +32,13 @@ class Assignment:
 
         self.data_assignment.complete(self.factory.get_student_number(), value, entry_value)
         self.list_sync()
+
+    def btn_file(self):
+        self.data_assignment.file(self.factory.get_student_number())
+        messagebox.showinfo("알럿", "파일 저장 완료 (assignment.txt)")
+
+    def btn_statistics(self):
+        pass
 
     def btn_add(self):
         data_name = self.entry_category.get()
@@ -93,8 +100,8 @@ class Assignment:
 
     def setting_frame_list(self):
         Label(self.assignment, text= '과제 리스트', bg=WHITE, font=FONT_18_BOLD, fg=BLACK).place(x=40, y=200)
-        Button(self.assignment, text='파일로 내보내기', font=FONT_16, bd=0, highlightthickness=0).place(x=150, y=200)
-        Button(self.assignment, text='통계보기', font=FONT_16, bd=0, highlightthickness=0).place(x=300, y=200)
+        Button(self.assignment, text='파일로 내보내기', font=FONT_16, bd=0, highlightthickness=0, command=self.btn_file).place(x=150, y=200)
+        Button(self.assignment, text='통계보기', font=FONT_16, bd=0, highlightthickness=0, command=self.btn_statistics).place(x=300, y=200)
 
         self.list = Frame(self.root)
         self.list.place(x=40, y=380, width=1180, height=370)
@@ -115,7 +122,8 @@ class Assignment:
                     cell = Entry(self.list, bg=GRAY, fg=BLACK, font=FONT_16, relief=FLAT, bd=5, highlightthickness=0, width=8, justify=LEFT)
                     self.entries.append(cell)
                 elif j == 5 and value == '완료':
-                    cell = Button(self.list,text="완료",font=FONT_16_BOLD, width=3,height=1,bd=0,borderwidth=0,highlightthickness=0, command=lambda row_index=len(self.entries): self.complete_click(row_index))
+                    cell = Button(self.list,text="완료",font=FONT_16_BOLD, width=3,height=1,bd=0,borderwidth=0,highlightthickness=0, command=lambda row_index=len(self.entries): self.btn_complete
+            (row_index))
                 elif j == 0:
                     cell = Label(self.list, text=value, anchor=W, font=FONT_18_BOLD,  borderwidth=0, relief=SOLID, padx=10, pady=5, bg=GRAY, fg=BLACK)
                 else:

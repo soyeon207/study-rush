@@ -145,6 +145,15 @@ class DataAssignment:
 
         self.data[number].append(temp)
         DataCategory().add_assignment(category)
+
+    def file(self, student_number):
+        with open('assignments.txt', 'w', encoding='utf-8') as file:
+            for assignment in self.data[student_number]:
+                file.write(f"마감 날짜: {assignment['마감 날짜']}\n")
+                file.write(f"카테고리: {assignment['카테고리']}\n")
+                file.write(f"과제명: {assignment['과제명']}\n")
+                file.write(f"걸린 시간: {assignment['걸린 시간']}\n")
+                file.write("\n")
             
             
 
