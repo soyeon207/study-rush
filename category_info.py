@@ -1,5 +1,5 @@
 class CategoryInfo:
-    LIST_COLUMNS = [["카테고리", "완료인원 / 총인원", "평균 소요 시간"]]
+    LIST_COLUMNS = ["카테고리", "완료인원 / 총인원", "평균 소요 시간"]
 
     category = None
     complete_count = 0              # 완료인원
@@ -9,13 +9,6 @@ class CategoryInfo:
 
     def __init__(self, category):
         self.category = category
-
-    def __init__(self, category, complete_count, total_count, total_time_required, time_required):
-        self.category = category
-        self.complete_count = complete_count
-        self.total_count = total_count
-        self.total_time_required = total_time_required
-        self.time_required = time_required
 
     def complete(self, time_required):
         self.complete_count += 1
@@ -49,13 +42,6 @@ class CategoryInfo:
         file.write(f"총 소요 시간: {self.total_time_required}\n")
         file.write(f"소요 시간: {self.time_required}\n")
         file.write("\n")
-
-    def print(self):
-        print('완료인원 : ', self.complete_count)
-        print('총인원 : ', self.total_count)
-        print('총 소요 시간 : ', self.total_time_required)
-        print('소요 시간 : ', self.time_required)
-
     
 
         

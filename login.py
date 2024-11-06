@@ -4,13 +4,11 @@ from utils import *
 from member import Member
 
 class Login:
-    def __init__(self, root, assignment, category, header, entities):
+    def __init__(self, root, entities, components):
         self.frame_setting(root)
-        self.assignment = assignment
         self.type = STUDENT
-        self.category = category
-        self.header = header
         self.entities = entities
+        self.components = components
         self.setting()
 
     def lift(self):
@@ -40,7 +38,6 @@ class Login:
         entry_val2 = self.entry2.get()
 
         self.member = Member(self.type, entry_val1, entry_val2)
-
         if self.type == STUDENT:
             self.valid_student()
         else:
@@ -71,6 +68,10 @@ class Login:
             self.header.lift()
 
     def setting(self):
+        self.assignment = self.components.assignment
+        self.category = self.components.category
+        self.header = self.components.header
+
         Label(self.login, text=TITLE, bg=WHITE, font=FONT_55_BOLD, fg=BLACK).place(x=500, y=100)
         
         self.entry1 = Entry(self.login, bg=GRAY, font=FONT_20, width=30, fg=BLACK, bd=7, relief=FLAT, highlightthickness=0)

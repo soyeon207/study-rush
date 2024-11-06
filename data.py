@@ -3,17 +3,13 @@ from category_info import CategoryInfo
 from assignment_info import AssignmentInfo
 
 class DataCategory:
-    data = {
-        '문제해결과 알고리즘 과제': CategoryInfo('문제해결과 알고리즘 과제', 1, 2, 15, [15]),
-        '러닝페어': CategoryInfo('러닝페어', 0, 1, 0, []),
-        '문제해결과 알고리즘 퀴즈': CategoryInfo('문제해결과 알고리즘 퀴즈', 0, 0, 0, [])
-    } 
+    data = {} 
 
     def complete(self, category, time):
         self.data[category].complete(time)
         
     def format_data(self):
-        result = CategoryInfo.LIST_COLUMNS
+        result = [CategoryInfo.LIST_COLUMNS]
         for key, value in self.data.items():
             result.append(value.format_list())
         return result
@@ -43,12 +39,7 @@ class DataCategory:
                 details.format_file(file)
 
 class DataAssignment:
-    data = {
-        '2024311126': [
-            AssignmentInfo('2024311126', '2024-11-01', '러닝페어', '러닝페어 계획서 제출 (중요중요)'),
-            AssignmentInfo('2024311126', '2024-11-03', '문제해결과 알고리즘 과제', '과제 2 제출하기'),
-            AssignmentInfo('2024311126', '2024-10-20', '문제해결과 알고리즘 과제', '과제 1 제출하기')]
-    }
+    data = {}
 
     def complete(self, student_number, idx, time):
         assignment = self.data[student_number][idx-1]

@@ -17,13 +17,13 @@ combostyle()
 entities = Entities()
 components = Components()
 
-header = Header(root, entities)
+header = Header(root, entities, components)
 category = Category(root, entities, components)
 assignment = Assignment(root, entities, components)
 statisitc = Statistic(root, entities, components)
-login = Login(root, assignment, category, header, entities)
+login = Login(root, entities, components)
 
-header.set_login(login)
 components.set_component(header, category, assignment, statisitc, login)
+login.setting()
 
 root.mainloop()
