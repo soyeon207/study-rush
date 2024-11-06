@@ -1,6 +1,4 @@
-from member import Member
-
-class DataFactory:
+class Entities:
     member = None
 
     def set_member(self, member):

@@ -5,13 +5,13 @@ from data import DataAssignment, DataCategory
 from datetime import datetime
 
 class Assignment:
-    def __init__(self, root, factory, class_factory):
+    def __init__(self, root, entities, components):
         self.root = root
-        self.factory = factory
+        self.entities = entities
         self.data_assignment = DataAssignment()
         self.data_category = DataCategory()
         self.setting()
-        self.class_factory = class_factory
+        self.components = components
     
     def setting(self):
         self.setting_frame()
@@ -31,15 +31,15 @@ class Assignment:
             messagebox.showwarning("알럿", "걸린 시간을 입력해주세요.")
             return 
 
-        self.data_assignment.complete(self.factory.get_student_number(), value, entry_value)
+        self.data_assignment.complete(self.entities.get_student_number(), value, entry_value)
         self.list_sync()
 
     def btn_file(self):
-        self.data_assignment.file(self.factory.get_student_number())
+        self.data_assignment.file(self.entities.get_student_number())
         messagebox.showinfo("알럿", "파일 저장 완료 (assignment.txt)")
 
     def btn_statistics(self):
-        self.class_factory.statistic.lift()
+        self.components.statistic.lift()
 
     def btn_add(self):
         data_name = self.entry_category.get()
@@ -47,7 +47,7 @@ class Assignment:
         data_category = self.combo.get()
         
         if self.btn_add_valid(data_name, data_date, data_category):
-            self.data_assignment.add_assignment(self.factory.get_student_number(), data_date, data_category, data_name)
+            self.data_assignment.add_assignment(self.entities.get_student_number(), data_date, data_category, data_name)
             self.list_sync()
             self.clear_entry()
 
@@ -112,7 +112,7 @@ class Assignment:
         for widget in self.list.winfo_children():
             widget.destroy()
         
-        data = self.data_assignment.format_data(self.factory.get_student_number())
+        data = self.data_assignment.format_data(self.entities.get_student_number())
         self.entries = []
         for i, row in enumerate(data):
             for j, value in enumerate(row):

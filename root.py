@@ -5,25 +5,25 @@ from assignment import Assignment
 from header import Header
 from statistic import Statistic
 from utils import *
-from data_factory import DataFactory
-from class_factory import ClassFactory
+from entities import Entities
+from components import Components
 from style import *
 
 root = Tk()
 root.title(TITLE)
-root.geometry('1280x832+500+150')
+root.geometry(WINDOW_SIZE)
 
 combostyle()
-factory = DataFactory()
-class_factory = ClassFactory()
+entities = Entities()
+components = Components()
 
-header = Header(root, factory)
-category = Category(root, factory, class_factory)
-assignment = Assignment(root, factory, class_factory)
-statisitc = Statistic(root, factory, class_factory)
-login = Login(root, assignment, category, header, factory)
+header = Header(root, entities)
+category = Category(root, entities, components)
+assignment = Assignment(root, entities, components)
+statisitc = Statistic(root, entities, components)
+login = Login(root, assignment, category, header, entities)
 
 header.set_login(login)
-class_factory.set_data(header, category, assignment, statisitc, login)
+components.set_component(header, category, assignment, statisitc, login)
 
 root.mainloop()

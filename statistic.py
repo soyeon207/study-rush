@@ -11,10 +11,10 @@ class Statistic:
     LABEL_FONT_SIZE = 8
     TITLE_FONT_SIZE = 13
 
-    def __init__(self, root, factory, class_factory):
+    def __init__(self, root, entities, components):
         self.root = root
-        self.factory = factory
-        self.class_factory = class_factory
+        self.entities = entities
+        self.components = components
         self.bar_fig = None
         self.pie_fig = None
         plt.rcParams['font.family'] = 'AppleGothic'
@@ -27,10 +27,10 @@ class Statistic:
         self.bar(selected_value)
 
     def btn_back(self):
-        if self.factory.is_student():
-            self.class_factory.assignment.lift()
+        if self.entities.is_student():
+            self.components.assignment.lift()
         else:
-            self.class_factory.category.lift()
+            self.components.category.lift()
 
     def setting(self):        
         self.statistic = Frame(self.root)

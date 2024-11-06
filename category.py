@@ -3,13 +3,12 @@ from tkinter import messagebox
 from utils import *
 from data import DataCategory
 
-
 class Category:
-    def __init__(self, root, factory, class_factory):
+    def __init__(self, root, entities, components):
         self.root = root
         self.data = DataCategory()
-        self.factory = factory
-        self.class_factory = class_factory
+        self.entities = entities
+        self.components = components
         self.setting()
 
     def setting(self):
@@ -23,7 +22,7 @@ class Category:
         self.list_synk()
 
     def btn_statistics(self):
-        self.class_factory.statistic.lift()
+        self.components.statistic.lift()
     
     def btn_file(self):
         self.data.file()

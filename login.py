@@ -4,13 +4,13 @@ from utils import *
 from member import Member
 
 class Login:
-    def __init__(self, root, assignment, category, header, factory):
+    def __init__(self, root, assignment, category, header, entities):
         self.frame_setting(root)
         self.assignment = assignment
         self.type = STUDENT
         self.category = category
         self.header = header
-        self.factory = factory
+        self.entities = entities
         self.setting()
 
     def lift(self):
@@ -54,7 +54,7 @@ class Login:
         if self.member.valid_check() == False:
             messagebox.showwarning("알럿", "학번과 이름을 입력해주세요.")
         else:
-            self.factory.set_member(self.member)
+            self.entities.set_member(self.member)
             self.assignment.lift()
             self.header.setting()
             self.header.lift()
@@ -65,7 +65,7 @@ class Login:
         elif code.upper() != SKKU :
             messagebox.showwarning("알럿", "코드가 일치하지 않습니다.")
         else:
-            self.factory.set_member(self.member)
+            self.entities.set_member(self.member)
             self.category.lift()
             self.header.setting()
             self.header.lift()
