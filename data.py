@@ -1,78 +1,50 @@
 from datetime import datetime
 from tkinter import messagebox
 from utils import *
+from category_info import CategoryInfo
 
 class DataCategory:
     data = {
-        '문제해결과 알고리즘 과제': {
-            '완료인원': 1,
-            '총인원': 2,
-            '총 소요 시간': 15,
-            '소요 시간': [15]
-        },
-        '러닝페어': {
-            '완료인원': 0,
-            '총인원': 1,
-            '총 소요 시간': 0,
-            '소요 시간': []
-        }
-        ,
-        '문제해결과 알고리즘 퀴즈': {
-            '완료인원': 0,
-            '총인원': 0,
-            '총 소요 시간': 0,
-            '소요 시간': []
-        }
+        '문제해결과 알고리즘 과제': CategoryInfo('문제해결과 알고리즘 과제', 1, 2, 15, [15]),
+        '러닝페어': CategoryInfo('러닝페어', 0, 1, 0, []),
+        '문제해결과 알고리즘 퀴즈': CategoryInfo('문제해결과 알고리즘 퀴즈', 0, 0, 0, [])
     } 
 
     def complete(self, category, time):
-        data_category = self.data[category]
-        data_category['완료인원'] += 1
-        data_category['총 소요 시간'] += time
-        data_category['소요 시간'].append(time)
-
+        self.data[category].complete(time)
+        
     def format_data(self):
-        result = [["카테고리", "완료인원 / 총인원", "평균 소요 시간"]]
+        result = CategoryInfo.LIST_COLUMNS
         for key, value in self.data.items():
-            avg = 0
-            if value['완료인원'] > 0:
-                avg = (value['총 소요 시간'] // value['완료인원'])
+            result.append(value.format_list())
 
-            result.append([key, str.format('{0} / {1}', value['완료인원'], value['총인원']), str.format('{0} 분', avg)])
+        print(result)
         return result
     
     def category_list(self):
         return list(self.data.keys())
     
     def statistic_pie_data(self, category):
-        return [self.data[category]['완료인원'], self.data[category]['총인원']- self.data[category]['완료인원']]
+        return self.data[category].format_pie()
     
     def statistic_bar_data(self, category):
-        return self.data[category]['소요 시간']
+        return self.data[category].format_bar()
     
     def add_category(self, category):
         if category in self.data:
             messagebox.showwarning("알럿", "이미 있는 카테고리 입니다.")
             return
 
-        self.data[category] = {
-            '완료인원': 0,
-            '총인원': 0,
-            '총 소요 시간': 0,
-            '소요 시간': []
-        }
+        self.data[category] = CategoryInfo(category)
 
     def add_assignment(self, category):
-        self.data[category]['총인원'] += 1
+        self.data[category].add_total_count()
 
     def file(self):
         with open('category.txt', 'w', encoding='utf-8') as file:
             for category, details in self.data.items():
-                file.write(f"카테고리: {category}\n")
-                for key, value in details.items():
-                    file.write(f"  {key}: {value}\n")
-                file.write("\n")
-    
+                details.format_file(file)
+            
 
 class DataAssignment:
     data = {
@@ -125,15 +97,11 @@ class DataAssignment:
         
         if student_number in self.data:
             for d in self.data[student_number]:
-                avg_time = '0분'
-                if category_data[d['카테고리']]['완료인원'] > 0:
-                    avg_time = str(category_data[d['카테고리']]['총 소요 시간'] // category_data[d['카테고리']]['완료인원']) + '분'
-
                 result.append([
                     self.difference_date(d['마감 날짜']),
                     d['카테고리'],
                     d['과제명'],
-                    avg_time,
+                    category_data[d['카테고리']].get_avg_time(),
                     d['걸린 시간'],
                     d['버튼']
                 ])
