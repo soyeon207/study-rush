@@ -16,10 +16,12 @@ class Statistic:
         self.factory = factory
         self.class_factory = class_factory
         self.bar_fig = None
+        self.pie_fig = None
         plt.rcParams['font.family'] = 'AppleGothic'
         self.setting()
 
     def on_combobox_selected(self, event):
+        self.clear()
         selected_value = self.combo.get()
         self.pie(selected_value)
         self.bar(selected_value)
@@ -90,8 +92,7 @@ class Statistic:
         ax.yaxis.get_major_locator().set_params(integer=True)
 
         self.add_canvas_to_statistic(fig, 650, 90)
-        
-
+    
     def add_canvas_to_statistic(self, fig, x, y):
         self.canvas = FigureCanvasTkAgg(fig, master=self.statistic)
         self.canvas.draw()
@@ -101,9 +102,13 @@ class Statistic:
     def lift(self):
         self.statistic.lift()
         self.combo_sync()
-
+        self.clear()
+    
+    def clear(self):
         if self.bar_fig != None:
             self.bar_fig.clear()
+            self.canvas.draw()
+        
+        if self.pie_fig != None:
             self.pie_fig.clear()
             self.canvas.draw()
-
