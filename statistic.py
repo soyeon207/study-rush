@@ -15,6 +15,7 @@ class Statistic:
         self.root = root
         self.factory = factory
         self.class_factory = class_factory
+        self.bar_fig = None
         plt.rcParams['font.family'] = 'AppleGothic'
         self.setting()
 
@@ -59,6 +60,7 @@ class Statistic:
         labels = ['완료 수', '미완료 수']
         
         fig, ax = plt.subplots()
+        self.pie_fig = fig
         fig.set_size_inches(5, 5)
         ax.pie(ratio, labels=labels, autopct='%.1f%%')
         ax.set_title('완료 수 통계', fontsize=self.TITLE_FONT_SIZE)
@@ -67,12 +69,15 @@ class Statistic:
         
     def bar(self, category):
         years = self.data_category.statistic_bar_data(category)
+        if len(years) == 0:
+            return
+    
         year_counts = Counter(years)
-
         x = list(year_counts.keys())  # 연도 (X축)
         values = list(year_counts.values())  # 각 연도의 개수 (Y축)
 
         fig, ax = plt.subplots()
+        self.bar_fig = fig
         fig.set_size_inches(5, 5)  # 크기 설정
         ax.bar(x, values)
 
@@ -88,11 +93,17 @@ class Statistic:
         
 
     def add_canvas_to_statistic(self, fig, x, y):
-        canvas = FigureCanvasTkAgg(fig, master=self.statistic)
-        canvas.draw()
-        canvas_widget = canvas.get_tk_widget()
-        canvas_widget.place(x=x, y=y)
+        self.canvas = FigureCanvasTkAgg(fig, master=self.statistic)
+        self.canvas.draw()
+        self.canvas_widget = self.canvas.get_tk_widget()
+        self.canvas_widget.place(x=x, y=y)
 
     def lift(self):
         self.statistic.lift()
         self.combo_sync()
+
+        if self.bar_fig != None:
+            self.bar_fig.clear()
+            self.pie_fig.clear()
+            self.canvas.draw()
+

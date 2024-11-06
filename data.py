@@ -63,7 +63,7 @@ class DataCategory:
         }
 
     def add_assignment(self, category):
-        self.data[category]['총인원'] = self.data[category]['총인원'] + 1
+        self.data[category]['총인원'] += 1
 
     def file(self):
         with open('category.txt', 'w', encoding='utf-8') as file:
@@ -163,6 +163,3 @@ class DataAssignment:
                 file.write(f"과제명: {assignment['과제명']}\n")
                 file.write(f"걸린 시간: {assignment['걸린 시간']}\n")
                 file.write("\n")
-            
-            
-

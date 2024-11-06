@@ -10,7 +10,9 @@ class Category:
         self.data = DataCategory()
         self.factory = factory
         self.class_factory = class_factory
+        self.setting()
 
+    def setting(self):
         self.frame_setting()
         self.frame_add_setting()
         self.frame_list_setting()
@@ -46,8 +48,6 @@ class Category:
         self.list = Frame(self.root)
         self.list.place(x=40, y=380, width=1180, height=370)
         self.list.configure(bg=LIGHT_GRAY)
-
-        self.list_synk()
     
     def list_synk(self):
         for widget in self.list.winfo_children():
@@ -75,4 +75,5 @@ class Category:
         self.assignment.lift()
         self.list.lift()
         self.add.lift()
+        self.list_synk()
     
