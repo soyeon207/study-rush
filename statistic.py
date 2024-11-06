@@ -75,15 +75,15 @@ class Statistic:
             return
     
         year_counts = Counter(years)
-        x = list(year_counts.keys())  # 연도 (X축)
-        values = list(year_counts.values())  # 각 연도의 개수 (Y축)
+        x = list(year_counts.keys())
+        values = list(year_counts.values()) 
 
         fig, ax = plt.subplots()
         self.bar_fig = fig
-        fig.set_size_inches(5, 5)  # 크기 설정
+        fig.set_size_inches(5, 5)
         ax.bar(x, values)
 
-        ax.set_xlabel('걸린 시간', fontsize=self.LABEL_FONT_SIZE)
+        ax.set_xlabel('걸린 시간 (분)', fontsize=self.LABEL_FONT_SIZE)
         ax.set_ylabel('인원 수 ', fontsize=self.LABEL_FONT_SIZE)
         ax.set_title('소요 시간 통계', fontsize=self.TITLE_FONT_SIZE)
         ax.set_xticks(x)

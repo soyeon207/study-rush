@@ -44,7 +44,10 @@ class Login:
         if self.type == STUDENT:
             self.valid_student()
         else:
-            self.valid_master(entry_val1, entry_val2)
+            self.valid_master(entry_val1)
+
+        self.entry1.delete(0, END)
+        self.entry2.delete(0, END)
 
 
     def valid_student(self):
@@ -56,7 +59,7 @@ class Login:
             self.header.setting()
             self.header.lift()
 
-    def valid_master(self, code, name):
+    def valid_master(self, code):
         if code == '' or self.member.valid_check() == False:
             messagebox.showwarning("알럿", "코드와 이름을 입력해주세요.")
         elif code.upper() != SKKU :
