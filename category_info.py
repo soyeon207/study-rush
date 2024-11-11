@@ -5,9 +5,9 @@ class CategoryInfo:
     complete_count = 0              # 완료인원
     total_count = 0                 # 총인원
     total_time_required = 0         # 총 소요 시간
-    time_required = []              # 소요 시간
 
     def __init__(self, category):
+        self.time_required = []
         self.category = category
 
     def complete(self, time_required):
