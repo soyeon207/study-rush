@@ -15,8 +15,6 @@ class Statistic:
         self.root = root
         self.entities = entities
         self.components = components
-        self.bar_fig = None
-        self.pie_fig = None
         plt.rcParams['font.family'] = 'AppleGothic'
         self.setting()
 
@@ -34,13 +32,17 @@ class Statistic:
 
     def setting(self):        
         self.statistic = Frame(self.root)
-        self.statistic.place(x=0, y=140, width=1280, height=692)       
+        self.statistic.place(x=0, y=140, width=1280, height=100)       
         self.statistic.configure(bg=WHITE)
 
-        self.data_category = DataCategory()
+        self.statistical_data = Frame(self.root)
+        self.statistical_data.place(x=0, y=240, width=1280, height=592)       
+        self.statistical_data.configure(bg=WHITE)
 
+        self.data_category = DataCategory()
         Label(self.statistic, text= '카테고리별 통계 보기', bg=WHITE, font=FONT_18_BOLD, fg=BLACK).place(x=40, y=0)
         Button(self.statistic, text='뒤로 가기', font=FONT_16, bd=0, highlightthickness=0, command=self.btn_back).place(x=1150, y=0)
+
         self.combo = None
         self.combo_sync()
 
@@ -62,7 +64,6 @@ class Statistic:
         labels = ['완료 수', '미완료 수']
         
         fig, ax = plt.subplots()
-        self.pie_fig = fig
         fig.set_size_inches(5, 5)
         ax.pie(ratio, labels=labels, autopct='%.1f%%')
         ax.set_title('완료 수 통계', fontsize=self.TITLE_FONT_SIZE)
@@ -79,7 +80,6 @@ class Statistic:
         values = list(year_counts.values()) 
 
         fig, ax = plt.subplots()
-        self.bar_fig = fig
         fig.set_size_inches(5, 5)
         ax.bar(x, values)
 
@@ -94,21 +94,17 @@ class Statistic:
         self.add_canvas_to_statistic(fig, 650, 90)
     
     def add_canvas_to_statistic(self, fig, x, y):
-        self.canvas = FigureCanvasTkAgg(fig, master=self.statistic)
+        self.canvas = FigureCanvasTkAgg(fig, master=self.statistical_data)
         self.canvas.draw()
         self.canvas_widget = self.canvas.get_tk_widget()
         self.canvas_widget.place(x=x, y=y)
 
     def lift(self):
         self.statistic.lift()
-        self.combo_sync()
+        self.statistical_data.lift()
         self.clear()
+        self.combo_sync()
     
     def clear(self):
-        if self.bar_fig != None:
-            self.bar_fig.clear()
-            self.canvas.draw()
-        
-        if self.pie_fig != None:
-            self.pie_fig.clear()
-            self.canvas.draw()
+        for widget in self.statistical_data.winfo_children():
+            widget.destroy()
