@@ -26,7 +26,11 @@ class Header:
         Button(self.header, text='로그아웃', font=FONT_16, bd=0, highlightthickness=0, command=self.logout).place(x=600, y=50)
 
     def lift(self):
+        for widget in self.header.winfo_children():
+            widget.destroy()
+            
         self.header.lift()
+        self.setting()
         if self.member.type == MASTER:
             self.master()
 
