@@ -34,13 +34,13 @@ class Category:
         self.add.place(x=40, y=175, width=1180, height=130)
         self.add.configure(bg=LIGHT_GRAY)
 
-        Label(self.add, text= '카테고리', bg=LIGHT_GRAY, font=FONT_18, fg=BLACK).place(x=30, y=20)
+        Label(self.add, text= '과제명', bg=LIGHT_GRAY, font=FONT_18, fg=BLACK).place(x=30, y=20)
         self.entry_category = Entry(self.add, bg=GRAY, width=115, fg=BLACK, bd=5, relief=FLAT, highlightthickness=0)
         self.entry_category.place(x=30, y=60, height=30)
         Button(self.add, text='추가', font=FONT_16, bd=0, highlightthickness=0, command=self.add_button).place(x=1100, y=60, height=30)
 
     def frame_list_setting(self):
-        Label(self.assignment, text= '카테고리 리스트', bg=WHITE, font=FONT_18_BOLD, fg=BLACK).place(x=40, y=200)
+        Label(self.assignment, text= '과제 리스트', bg=WHITE, font=FONT_18_BOLD, fg=BLACK).place(x=40, y=200)
         Button(self.assignment, text='파일로 내보내기', font=FONT_16, bd=0, highlightthickness=0, command=self.btn_file).place(x=180, y=200)
         Button(self.assignment, text='통계보기', font=FONT_16, bd=0, highlightthickness=0, command=self.btn_statistics).place(x=330, y=200)
 

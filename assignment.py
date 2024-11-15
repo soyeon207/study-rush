@@ -78,8 +78,8 @@ class Assignment:
         self.add.place(x=40, y=175, width=1180, height=130)
         self.add.configure(bg=LIGHT_GRAY)
 
-        Label(self.add, text= '카테고리', bg=LIGHT_GRAY, font=FONT_18, fg=BLACK).place(x=30, y=20)
-        Label(self.add, text= '과제명', bg=LIGHT_GRAY, font=FONT_18, fg=BLACK).place(x=300, y=20)
+        Label(self.add, text= '과제', bg=LIGHT_GRAY, font=FONT_18, fg=BLACK).place(x=30, y=20)
+        Label(self.add, text= '설명', bg=LIGHT_GRAY, font=FONT_18, fg=BLACK).place(x=300, y=20)
         Label(self.add, text= '마감 날짜 (YYYY-MM-DD)', bg=LIGHT_GRAY, font=FONT_18, fg=BLACK).place(x=800, y=20)
 
         self.combo = None

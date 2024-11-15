@@ -1,5 +1,5 @@
 class CategoryInfo:
-    LIST_COLUMNS = ["카테고리", "완료인원 / 총인원", "평균 소요 시간"]
+    LIST_COLUMNS = ["과제", "완료인원 / 총인원", "평균 소요 시간"]
 
     category = None
     complete_count = 0              # 완료인원

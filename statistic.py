@@ -40,7 +40,7 @@ class Statistic:
         self.statistical_data.configure(bg=WHITE)
 
         self.data_category = DataCategory()
-        Label(self.statistic, text= '카테고리별 통계 보기', bg=WHITE, font=FONT_18_BOLD, fg=BLACK).place(x=40, y=0)
+        Label(self.statistic, text= '과제별 통계 보기', bg=WHITE, font=FONT_18_BOLD, fg=BLACK).place(x=40, y=0)
         Button(self.statistic, text='뒤로 가기', font=FONT_16, bd=0, highlightthickness=0, command=self.btn_back).place(x=1150, y=0)
 
         self.combo = None

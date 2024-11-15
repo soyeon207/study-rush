@@ -2,7 +2,7 @@ from datetime import datetime
 from utils import *
 
 class AssignmentInfo:
-    LIST_COLUMNS = ["", "카테고리", "과제명", "평균 소요 시간", "걸린 시간", ""]
+    LIST_COLUMNS = ["", "과제명", "설명", "평균 소요 시간", "걸린 시간", ""]
 
     deadline_date = None
     category = None
