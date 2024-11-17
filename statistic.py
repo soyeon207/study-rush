@@ -26,7 +26,7 @@ class Statistic:
 
     def btn_back(self):
         if self.entities.is_student():
-            self.components.study.lift()
+            self.components.task.lift()
         else:
             self.components.assignment.lift()
 

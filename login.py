@@ -52,7 +52,7 @@ class Login:
             messagebox.showwarning("알럿", "학번과 이름을 입력해주세요.")
         else:
             self.entities.set_member(self.member)
-            self.study.lift()
+            self.task.lift()
             self.header.setting()
             self.header.lift()
 
@@ -68,7 +68,7 @@ class Login:
             self.header.lift()
 
     def setting(self):
-        self.study = self.components.study
+        self.task = self.components.task
         self.assignment = self.components.assignment
         self.header = self.components.header
 

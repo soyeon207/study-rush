@@ -1,14 +1,14 @@
 from tkinter import *
 from tkinter import ttk, messagebox
 from utils import *
-from data import DataStudy, DataAssignment
+from data import DataTask, DataAssignment
 from datetime import datetime
 
-class Study:
+class Task:
     def __init__(self, root, entities, components):
         self.root = root
         self.entities = entities
-        self.data_study = DataStudy()
+        self.data_task = DataTask()
         self.data_assignment = DataAssignment()
         self.setting()
         self.components = components
@@ -31,28 +31,28 @@ class Study:
             messagebox.showwarning("알럿", "걸린 시간을 입력해주세요.")
             return 
 
-        self.data_study.complete(self.entities.get_student_number(), value, entry_value)
+        self.data_task.complete(self.entities.get_student_number(), value, entry_value)
         self.list_sync()
 
     def btn_file(self):
-        self.data_study.file(self.entities.get_student_number())
-        messagebox.showinfo("알럿", "파일 저장 완료 (study.txt)")
+        self.data_task.file(self.entities.get_student_number())
+        messagebox.showinfo("알럿", "파일 저장 완료 (task.txt)")
 
     def btn_statistics(self):
         self.components.statistic.lift()
 
     def btn_add(self):
         data_name = self.entry_assignment.get()
-        data_date = self.entry_study.get()
+        data_date = self.entry_task.get()
         data_assignment = self.combo.get()
         
         if self.btn_add_valid(data_name, data_date, data_assignment):
-            self.data_study.add_study(self.entities.get_student_number(), data_date, data_assignment, data_name)
+            self.data_task.add_task(self.entities.get_student_number(), data_date, data_assignment, data_name)
             self.list_sync()
             self.clear_entry()
 
     def clear_entry(self):
-        self.entry_study.delete(0, END)
+        self.entry_task.delete(0, END)
         self.entry_assignment.delete(0, END)
         self.combo.set('')
 
@@ -67,13 +67,13 @@ class Study:
         elif valid_date < datetime.now():
             messagebox.showwarning("알럿", "오늘보다 큰 날짜를 입력해주세요.")
         elif assignment == '':
-            messagebox.showwarning("알럿", "카테고리를 선택해주세요.")
+            messagebox.showwarning("알럿", "과제를 선택해주세요.")
         else:
             return True
         return False
 
     def setting_frame_add(self):
-        Label(self.study, text= '과제 추가', bg=WHITE, font=FONT_18_BOLD, fg=BLACK).place(x=40, y=0)
+        Label(self.task, text= '작업 추가', bg=WHITE, font=FONT_18_BOLD, fg=BLACK).place(x=40, y=0)
         self.add = Frame(self.root)
         self.add.place(x=40, y=175, width=1180, height=130)
         self.add.configure(bg=LIGHT_GRAY)
@@ -87,8 +87,8 @@ class Study:
 
         self.entry_assignment = Entry(self.add, bg=GRAY, width=50, fg=BLACK, bd=5, relief=FLAT, highlightthickness=0)
         self.entry_assignment.place(x=300, y=60, height=30)
-        self.entry_study = Entry(self.add, bg=GRAY, width=30, fg=BLACK, bd=5, relief=FLAT, highlightthickness=0)
-        self.entry_study.place(x=800, y=60, height=30)
+        self.entry_task = Entry(self.add, bg=GRAY, width=30, fg=BLACK, bd=5, relief=FLAT, highlightthickness=0)
+        self.entry_task.place(x=800, y=60, height=30)
         Button(self.add, text='추가', font=FONT_16, bd=0, highlightthickness=0, command=self.btn_add).place(x=1100, y=60, height=30)
 
     def combo_sync(self):
@@ -100,9 +100,9 @@ class Study:
         self.combo.place(x=30, y=60)
 
     def setting_frame_list(self):
-        Label(self.study, text= '과제 리스트', bg=WHITE, font=FONT_18_BOLD, fg=BLACK).place(x=40, y=200)
-        Button(self.study, text='파일로 내보내기', font=FONT_16, bd=0, highlightthickness=0, command=self.btn_file).place(x=150, y=200)
-        Button(self.study, text='통계보기', font=FONT_16, bd=0, highlightthickness=0, command=self.btn_statistics).place(x=300, y=200)
+        Label(self.task, text= '작업 리스트', bg=WHITE, font=FONT_18_BOLD, fg=BLACK).place(x=40, y=200)
+        Button(self.task, text='파일로 내보내기', font=FONT_16, bd=0, highlightthickness=0, command=self.btn_file).place(x=150, y=200)
+        Button(self.task, text='통계보기', font=FONT_16, bd=0, highlightthickness=0, command=self.btn_statistics).place(x=300, y=200)
 
         self.list = Frame(self.root)
         self.list.place(x=40, y=380, width=1180, height=370)
@@ -112,21 +112,25 @@ class Study:
         for widget in self.list.winfo_children():
             widget.destroy()
         
-        data = self.data_study.format_data(self.entities.get_student_number())
+        data = self.data_task.format_data(self.entities.get_student_number())
         self.entries = []
         for i, row in enumerate(data):
             for j, value in enumerate(row):
                 if i == 0:
+                    # 제목 -> Label
                     cell = Label(self.list, text=value, anchor=W, font=FONT_18_BOLD, padx=10, borderwidth=0, relief=SOLID, pady=5, bg=LIGHT_GRAY, fg=BLACK)
                 elif j == 4 and value == '':
+                    # 걸린 시간을 입력받아야 하는 경우 -> Entry
                     cell = Entry(self.list, bg=GRAY, fg=BLACK, font=FONT_16, relief=FLAT, bd=5, highlightthickness=0, width=8, justify=LEFT)
                     self.entries.append(cell)
                 elif j == 5 and value == '완료':
-                    cell = Button(self.list,text="완료",font=FONT_16_BOLD, width=3,height=1,bd=0,borderwidth=0,highlightthickness=0, command=lambda row_index=len(self.entries): self.btn_complete
-            (row_index))
+                    # 작업이 완료되지 않은 경우 -> Button
+                    cell = Button(self.list,text="완료",font=FONT_16_BOLD, width=3,height=1,bd=0,borderwidth=0,highlightthickness=0, command=lambda row_index=len(self.entries): self.btn_complete(row_index))
                 elif j == 0:
+                    # 1열은 뱃지로 -> bg 컬러를 다르게, 텍스트를 bold 로
                     cell = Label(self.list, text=value, anchor=W, font=FONT_18_BOLD,  borderwidth=0, relief=SOLID, padx=10, pady=5, bg=GRAY, fg=BLACK)
                 else:
+                    # 그 외의 경우 일반적인 텍스트로
                     cell = Label(self.list, text=value, anchor=W, font=FONT_18, borderwidth=0, relief=SOLID, padx=10, pady=5, bg=LIGHT_GRAY, fg=BLACK)
 
                 if i != 0 and j == 4 and value != '':
@@ -141,13 +145,13 @@ class Study:
             self.list.grid_columnconfigure(j, weight=1)
 
     def setting_frame(self):
-        self.study = Frame(self.root)
-        self.study.place(x=0, y=140, width=1280, height=692)
-        self.study.configure(bg=WHITE)
+        self.task = Frame(self.root)
+        self.task.place(x=0, y=140, width=1280, height=692)
+        self.task.configure(bg=WHITE)
 
     def lift(self):
         self.list_sync()
-        self.study.lift()
+        self.task.lift()
         self.list.lift()
         self.add.lift()
         self.combo_sync()

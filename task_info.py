@@ -1,14 +1,14 @@
 from datetime import datetime
 from utils import *
 
-class StudyInfo:
+class TaskInfo:
     LIST_COLUMNS = ["", "과제명", "설명", "평균 소요 시간", "걸린 시간", ""]
 
-    deadline_date = None
-    assignment = None
-    task_name = None
-    required_time = 0
-    student_number = None
+    deadline_date = None        # 마감일자
+    assignment = None           # 과제명
+    task_name = None            # 설명
+    required_time = 0           # 걸린 시간
+    student_number = None       # 학번
 
     def __init__(self, student_number, deadline_date, assignment, task_name):
         self.student_number = student_number
@@ -16,6 +16,7 @@ class StudyInfo:
         self.assignment = assignment
         self.task_name = task_name
 
+    # 과제 완료
     def complete(self, time):
         self.required_time = time
 
@@ -30,7 +31,9 @@ class StudyInfo:
         converted_date = datetime.strptime(self.deadline_date, DATE_FORMAT)
         day_difference = (now - converted_date).days
 
-        if day_difference == 0:
+        if self.required_time > 0:
+            return '완료'
+        elif day_difference == 0:
             return '오늘'
         elif day_difference < 0:
             return f"D{day_difference}"
@@ -42,8 +45,8 @@ class StudyInfo:
         
     def format_file(self, file):
         file.write(f"마감 날짜: {self.deadline_date}\n")
-        file.write(f"카테고리: {self.assignment}\n")
-        file.write(f"과제명: {self.task_name}\n")
+        file.write(f"과제명: {self.assignment}\n")
+        file.write(f"설명: {self.task_name}\n")
         file.write(f"걸린 시간: {self.get_required_time()}\n")
         file.write("\n")
 

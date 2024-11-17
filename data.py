@@ -1,10 +1,19 @@
 from tkinter import messagebox
 from assignment_info import AssignmentInfo
-from study_info import StudyInfo
+from task_info import TaskInfo
 
 class DataAssignment:
     data = {}
 
+    # 과제를 추가하는 메서드
+    def add_assignment(self, assignment):
+        if assignment in self.data:
+            messagebox.showwarning("알럿", "이미 있는 과제 입니다.")
+            return
+
+        self.data[assignment] = AssignmentInfo(assignment)
+
+    # 과제를 완료하는 메서드
     def complete(self, assignment, time):
         if assignment in self.data:
             self.data[assignment].complete(time)
@@ -24,14 +33,9 @@ class DataAssignment:
     def statistic_bar_data(self, assignment):
         return self.data[assignment].format_bar()
     
-    def add_assignment(self, assignment):
-        if assignment in self.data:
-            messagebox.showwarning("알럿", "이미 있는 카테고리 입니다.")
-            return
+    
 
-        self.data[assignment] = AssignmentInfo(assignment)
-
-    def add_study(self, assignment):
+    def add_task(self, assignment):
         self.data[assignment].add_total_count()
 
     def file(self):
@@ -39,16 +43,25 @@ class DataAssignment:
             for details in self.data.values():
                 details.format_file(file)
 
-class DataStudy:
+class DataTask:
     data = {}
 
+    # 학생 별 과제를 추가하는 메서드
+    def add_task(self, number, date, assignment, name):
+        if number not in self.data:
+            self.data[number] = []
+
+        self.data[number].append(TaskInfo(number, date, assignment, name))
+        DataAssignment().add_task(assignment)
+        
+    # 학생 별 과제를 완료하는 메서드
     def complete(self, student_number, idx, time):
-        study = self.data[student_number][idx-1]
-        study.complete(time)
-        DataAssignment().complete(study.assignment, time)
+        task = self.data[student_number][idx-1]
+        task.complete(time)
+        DataAssignment().complete(task.assignment, time)
 
     def format_data(self, student_number):
-        result = [StudyInfo.LIST_COLUMNS]
+        result = [TaskInfo.LIST_COLUMNS]
         assignment_data = DataAssignment.data
         
         if student_number in self.data:
@@ -56,14 +69,9 @@ class DataStudy:
                 result.append(d.format_list(assignment_data[d.assignment].get_avg_time()))
         return result
     
-    def add_study(self, number, date, assignment, name):
-        if number not in self.data:
-            self.data[number] = []
-
-        self.data[number].append(StudyInfo(number, date, assignment, name))
-        DataAssignment().add_study(assignment)
+    
 
     def file(self, student_number):
-        with open('studys.txt', 'w', encoding='utf-8') as file:
-            for study in self.data[student_number]:
-                study.format_file(file)
+        with open('tasks.txt', 'w', encoding='utf-8') as file:
+            for task in self.data[student_number]:
+                task.format_file(file)

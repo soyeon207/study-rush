@@ -10,6 +10,7 @@ class AssignmentInfo:
         self.time_required = []
         self.assignment = assignment
 
+    # 과제를 완료하는 메소드
     def complete(self, time_required):
         self.complete_count += 1
         self.total_time_required += time_required
@@ -36,7 +37,7 @@ class AssignmentInfo:
         return self.time_required
     
     def format_file(self, file):
-        file.write(f"카테고리: {self.assignment}\n")
+        file.write(f"과제: {self.assignment}\n")
         file.write(f"완료인원: {self.complete_count}\n")
         file.write(f"총인원: {self.total_count}\n")
         file.write(f"총 소요 시간: {self.total_time_required}\n")
