@@ -9,21 +9,31 @@ from entities import Entities
 from components import Components
 from style import *
 
-root = Tk()
-root.title(TITLE)
-root.geometry(WINDOW_SIZE)
+def setup_root():
+    root = Tk()
+    root.title(TITLE)
+    root.geometry(WINDOW_SIZE)
+    combostyle()
+    return root
 
-combostyle()
-entities = Entities()
-components = Components()
+def initialize_components(root, entities, components):
+    header = Header(root, entities, components)
+    category = Category(root, entities, components)
+    assignment = Assignment(root, entities, components)
+    statisitc = Statistic(root, entities, components)
+    login = Login(root, entities, components)
 
-header = Header(root, entities, components)
-category = Category(root, entities, components)
-assignment = Assignment(root, entities, components)
-statisitc = Statistic(root, entities, components)
-login = Login(root, entities, components)
+    components.set_component(header, category, assignment, statisitc, login)
+    login.setting()
 
-components.set_component(header, category, assignment, statisitc, login)
-login.setting()
+def main():
+    root = setup_root()
 
-root.mainloop()
+    entities = Entities()
+    components = Components()
+
+    initialize_components(root, entities, components)
+    root.mainloop()
+
+if __name__ == "__main__":
+    main()
