@@ -19,6 +19,7 @@ class Assignment:
     def add_button(self):
         assignment = self.entry_assignment.get()
         self.data.add_assignment(assignment)
+        self.entry_assignment.delete(0, END)
         self.list_synk()
 
     def btn_statistics(self):
