@@ -1,7 +1,7 @@
 from tkinter import *
 from login import Login
-from category import Category
 from assignment import Assignment
+from study import Study
 from header import Header
 from statistic import Statistic
 from utils import *
@@ -18,12 +18,12 @@ def setup_root():
 
 def initialize_components(root, entities, components):
     header = Header(root, entities, components)
-    category = Category(root, entities, components)
     assignment = Assignment(root, entities, components)
+    study = Study(root, entities, components)
     statisitc = Statistic(root, entities, components)
     login = Login(root, entities, components)
 
-    components.set_component(header, category, assignment, statisitc, login)
+    components.set_component(header, assignment, study, statisitc, login)
     login.setting()
 
 def main():

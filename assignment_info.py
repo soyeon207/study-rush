@@ -1,57 +1,50 @@
-from datetime import datetime
-from utils import *
-
 class AssignmentInfo:
-    LIST_COLUMNS = ["", "과제명", "설명", "평균 소요 시간", "걸린 시간", ""]
+    LIST_COLUMNS = ["과제", "완료인원 / 총인원", "평균 소요 시간"]
 
-    deadline_date = None
-    category = None
-    task_name = None
-    required_time = 0
-    student_number = None
+    assignment = None
+    complete_count = 0              # 완료인원
+    total_count = 0                 # 총인원
+    total_time_required = 0         # 총 소요 시간
 
-    def __init__(self, student_number, deadline_date, category, task_name):
-        self.student_number = student_number
-        self.deadline_date = deadline_date
-        self.category = category
-        self.task_name = task_name
+    def __init__(self, assignment):
+        self.time_required = []
+        self.assignment = assignment
 
-    def complete(self, time):
-        self.required_time = time
+    def complete(self, time_required):
+        self.complete_count += 1
+        self.total_time_required += time_required
+        self.time_required.append(time_required)
 
-    def get_required_time(self):
-        if self.required_time == 0:
-            return ''
+    def add_total_count(self):
+        self.total_count += 1
 
-        return str(self.required_time) + '분'
+    def format_list(self):
+        avg = 0
+        if self.complete_count > 0:
+            avg = (self.total_time_required // self.complete_count)
+        return [self.assignment, str.format('{0} / {1}', self.complete_count, self.total_count), str.format('{0} 분', avg)]
+
+    def get_avg_time(self):
+        if self.complete_count < 1:
+            return '0분'
+        return str(self.total_time_required // self.complete_count) + '분'
+
+    def format_pie(self):
+        return [self.complete_count, self.total_count - self.complete_count]
     
-    def get_button(self):
-        if self.required_time == 0:
-            return '완료'
-        return ''
+    def format_bar(self):
+        return self.time_required
     
-    def difference_date(self):
-        now = datetime.now()
-        converted_date = datetime.strptime(self.deadline_date, DATE_FORMAT)
-        date_difference = now - converted_date 
-
-        day = date_difference.days
-        if day == 0:
-            return '오늘'
-        elif day < 0:
-            return 'D'+str(day)
-        else:
-            return '마감'
-
-    def format_list(self, avg_time):
-        return [self.difference_date(), self.category, self.task_name, avg_time, self.get_required_time(), self.get_button()]
-        
     def format_file(self, file):
-        file.write(f"마감 날짜: {self.deadline_date}\n")
-        file.write(f"카테고리: {self.category}\n")
-        file.write(f"과제명: {self.task_name}\n")
-        file.write(f"걸린 시간: {self.get_required_time()}\n")
+        file.write(f"카테고리: {self.assignment}\n")
+        file.write(f"완료인원: {self.complete_count}\n")
+        file.write(f"총인원: {self.total_count}\n")
+        file.write(f"총 소요 시간: {self.total_time_required}\n")
+        file.write(f"소요 시간: {self.time_required}\n")
         file.write("\n")
-
     
+
         
+        
+
+

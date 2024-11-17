@@ -52,7 +52,7 @@ class Login:
             messagebox.showwarning("알럿", "학번과 이름을 입력해주세요.")
         else:
             self.entities.set_member(self.member)
-            self.assignment.lift()
+            self.study.lift()
             self.header.setting()
             self.header.lift()
 
@@ -63,13 +63,13 @@ class Login:
             messagebox.showwarning("알럿", "코드가 일치하지 않습니다.")
         else:
             self.entities.set_member(self.member)
-            self.category.lift()
+            self.assignment.lift()
             self.header.setting()
             self.header.lift()
 
     def setting(self):
+        self.study = self.components.study
         self.assignment = self.components.assignment
-        self.category = self.components.category
         self.header = self.components.header
 
         Label(self.login, text=TITLE, bg=WHITE, font=FONT_55_BOLD, fg=BLACK).place(x=500, y=100)

@@ -1,13 +1,13 @@
 class Components:
     header = None
-    category = None
     assignment = None
+    study = None
     statistic = None
     login = None
 
-    def set_component(self, header, category, assignment, statistic, login):
+    def set_component(self, header, assignment, study, statistic, login):
         self.header = header
-        self.category = category
         self.assignment = assignment
+        self.study = study
         self.statistic = statistic
         self.login = login

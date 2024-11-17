@@ -26,9 +26,9 @@ class Statistic:
 
     def btn_back(self):
         if self.entities.is_student():
-            self.components.assignment.lift()
+            self.components.study.lift()
         else:
-            self.components.category.lift()
+            self.components.assignment.lift()
 
     def setting(self):        
         self.statistic = Frame(self.root)
@@ -39,7 +39,7 @@ class Statistic:
         self.statistical_data.place(x=0, y=240, width=1280, height=592)       
         self.statistical_data.configure(bg=WHITE)
 
-        self.data_category = DataCategory()
+        self.data_assignment = DataAssignment()
         Label(self.statistic, text= '과제별 통계 보기', bg=WHITE, font=FONT_18_BOLD, fg=BLACK).place(x=40, y=0)
         Button(self.statistic, text='뒤로 가기', font=FONT_16, bd=0, highlightthickness=0, command=self.btn_back).place(x=1150, y=0)
 
@@ -50,13 +50,13 @@ class Statistic:
         if self.combo != None:
             self.combo.destroy()
 
-        category_list = list(DataCategory().category_list())
-        self.combo = ttk.Combobox(self.statistic, height=15, state="readonly",  values = category_list, background=LIGHT_GRAY)
+        assignment_list = list(DataAssignment().assignment_list())
+        self.combo = ttk.Combobox(self.statistic, height=15, state="readonly",  values = assignment_list, background=LIGHT_GRAY)
         self.combo.place(x=40, y=40)
         self.combo.bind("<<ComboboxSelected>>", self.on_combobox_selected)
 
-    def pie(self, category):
-        ratio = self.data_category.statistic_pie_data(category)
+    def pie(self, assignment):
+        ratio = self.data_assignment.statistic_pie_data(assignment)
         if ratio[0] == 0 and ratio[1] == 0:
             messagebox.showwarning('알럿', '데이터가 없습니다.')
             return
@@ -70,8 +70,8 @@ class Statistic:
 
         self.add_canvas_to_statistic(fig, 30, 90)
         
-    def bar(self, category):
-        years = self.data_category.statistic_bar_data(category)
+    def bar(self, assignment):
+        years = self.data_assignment.statistic_bar_data(assignment)
         if len(years) == 0:
             return
     
