@@ -8,7 +8,7 @@ class Assignment:
         self.root = root
         self.data = DataAssignment()
         self.entities = entities
-        self.components = components
+        self.components = components    
         self.setting()
 
     def setting(self):
@@ -30,7 +30,7 @@ class Assignment:
         messagebox.showinfo("알럿", "파일 저장 완료 (assignment.txt)")
 
     def frame_add_setting(self):
-        Label(self.task, text= '과제 추가', bg=WHITE, font=FONT_18_BOLD, fg=BLACK).place(x=40, y=0)
+        Label(self.assignment, text= '과제 추가', bg=WHITE, font=FONT_18_BOLD, fg=BLACK).place(x=40, y=0)
         self.add = Frame(self.root)
         self.add.place(x=40, y=175, width=1180, height=130)
         self.add.configure(bg=LIGHT_GRAY)
@@ -41,9 +41,9 @@ class Assignment:
         Button(self.add, text='추가', font=FONT_16, bd=0, highlightthickness=0, command=self.add_button).place(x=1100, y=60, height=30)
 
     def frame_list_setting(self):
-        Label(self.task, text= '과제 리스트', bg=WHITE, font=FONT_18_BOLD, fg=BLACK).place(x=40, y=200)
-        Button(self.task, text='파일로 내보내기', font=FONT_16, bd=0, highlightthickness=0, command=self.btn_file).place(x=180, y=200)
-        Button(self.task, text='통계보기', font=FONT_16, bd=0, highlightthickness=0, command=self.btn_statistics).place(x=330, y=200)
+        Label(self.assignment, text= '과제 리스트', bg=WHITE, font=FONT_18_BOLD, fg=BLACK).place(x=40, y=200)
+        Button(self.assignment, text='파일로 내보내기', font=FONT_16, bd=0, highlightthickness=0, command=self.btn_file).place(x=180, y=200)
+        Button(self.assignment, text='통계보기', font=FONT_16, bd=0, highlightthickness=0, command=self.btn_statistics).place(x=330, y=200)
 
         self.list = Frame(self.root)
         self.list.place(x=40, y=380, width=1180, height=370)
@@ -67,12 +67,12 @@ class Assignment:
             self.list.grid_columnconfigure(j, weight=1)
 
     def frame_setting(self):
-        self.task = Frame(self.root)
-        self.task.place(x=0, y=140, width=1280, height=692)
-        self.task.configure(bg=WHITE)
+        self.assignment = Frame(self.root)
+        self.assignment.place(x=0, y=140, width=1280, height=692)
+        self.assignment.configure(bg=WHITE)
 
     def lift(self):
-        self.task.lift()
+        self.assignment.lift()
         self.list.lift()
         self.add.lift()
         self.list_synk()
